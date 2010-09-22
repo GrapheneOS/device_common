@@ -120,7 +120,7 @@ do
     echo
 
     echo -n '(cat << EOF) | sed s/__DEVICE__/$DEVICE/g | sed s/__MANUFACTURER__/$MANUFACTURER/g > ../../../vendor/$MANUFACTURER/$DEVICE/'
-    echo '$DEVICE-vendor-blobs.mk'
+    echo 'device-vendor-blobs.mk'
 
     echo '# Copyright (C) 2010 The Android Open Source Project'
     echo '#'
