@@ -112,7 +112,7 @@ do
         else
           echo unzip -j -o ../../../\${DEVICE}_update.zip $(echo $FULLPATH | cut -b 2-) -d ../../../vendor/\$MANUFACTURER/\$DEVICE/proprietary
         fi
-        if test $(basename $FULLPATH) = akmd -o $(basename $FULLPATH) = mm-venc-omx-test -o $(basename $FULLPATH) = parse_radio_log
+        if test $(basename $FULLPATH) = akmd -o $(basename $FULLPATH) = mm-venc-omx-test -o $(basename $FULLPATH) = parse_radio_log -o $(basename $FULLPATH) = akmd8973 -o $(basename $FULLPATH) = gpsd -o $(basename $FULLPATH) = pvrsrvinit
         then
           echo chmod 755 ../../../vendor/\$MANUFACTURER/\$DEVICE/proprietary/$(basename $FULLPATH)
         fi
