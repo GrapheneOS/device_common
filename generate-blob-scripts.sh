@@ -146,7 +146,7 @@ do
       cut -b 3- |
       while read FULLPATH
       do
-        if test $(basename $FULLPATH) = libgps.so -o $(basename $FULLPATH) = libcamera.so
+        if test $(basename $FULLPATH) = libgps.so -o $(basename $FULLPATH) = libcamera.so -o $(basename $FULLPATH) = libsecril-client.so
         then
           if test $FOUND = false
           then
