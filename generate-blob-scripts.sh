@@ -56,20 +56,20 @@ for DEVICENAME in $DEVICES
 do
   rm -rf out
   lunch full_$DEVICENAME-user
-  make -j8
+  make -j32
   cat out/target/product/$DEVICENAME/installed-files.txt |
     cut -b 15- |
-    sort > $ARCHIVEDIR/$DEVICENAME-with.txt
+    sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
 done
 rm -rf vendor
 for DEVICENAME in $DEVICES
 do
   rm -rf out
   lunch full_$DEVICENAME-user
-  make -j8
+  make -j32
   cat out/target/product/$DEVICENAME/installed-files.txt |
     cut -b 15- |
-    sort > $ARCHIVEDIR/$DEVICENAME-without.txt
+    sort -f > $ARCHIVEDIR/$DEVICENAME-without.txt
 done
 
 for DEVICENAME in $DEVICES
