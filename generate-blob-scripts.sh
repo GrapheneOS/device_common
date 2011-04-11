@@ -43,7 +43,7 @@ then
 fi
 shift
 
-DEVICES="passion crespo stingray"
+DEVICES="passion crespo crespo4g stingray"
 
 ARCHIVEDIR=archive-$(date +%s)
 mkdir $ARCHIVEDIR
