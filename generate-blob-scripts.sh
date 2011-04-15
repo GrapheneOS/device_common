@@ -43,7 +43,7 @@ then
 fi
 shift
 
-DEVICES="passion crespo crespo4g stingray"
+DEVICES="passion crespo crespo4g stingray wingray tuna toro"
 
 ARCHIVEDIR=archive-$(date +%s)
 mkdir $ARCHIVEDIR
@@ -187,6 +187,7 @@ do
 
     ) > $ARCHIVEDIR/$DEVICENAME-$FILESTYLE-files.sh
     cp $ARCHIVEDIR/$DEVICENAME-$FILESTYLE-files.sh device/$MANUFACTURERNAME/$DEVICENAME/$FILESTYLE-files.sh
+    chmod a+x device/$MANUFACTURERNAME/$DEVICENAME/$FILESTYLE-files.sh
   done
 
   (
