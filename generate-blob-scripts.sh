@@ -51,6 +51,10 @@ mkdir $ARCHIVEDIR
 repo sync
 repo sync
 repo sync
+
+# Remove directory that breaks the build
+rm -rf device/samsung/crespo4g/crespo4g_overlay
+
 . build/envsetup.sh
 for DEVICENAME in $DEVICES
 do
