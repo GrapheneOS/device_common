@@ -102,6 +102,10 @@ do
     echo 'mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE/proprietary'
 
     diff $ARCHIVEDIR/$DEVICENAME-without.txt $ARCHIVEDIR/$DEVICENAME-with.txt |
+      grep -v Nfc\.apk\$ |
+      grep -v Tag\.apk\$ |
+      grep -v libnfc\.so\$ |
+      grep -v libnfc_jni\.so\$ |
       grep '>' |
       cut -b 3- |
       while read FULLPATH
@@ -142,6 +146,10 @@ do
 
     FOUND=false
     diff $ARCHIVEDIR/$DEVICENAME-without.txt $ARCHIVEDIR/$DEVICENAME-with.txt |
+      grep -v Nfc\.apk\$ |
+      grep -v Tag\.apk\$ |
+      grep -v libnfc\.so\$ |
+      grep -v libnfc_jni\.so\$ |
       grep '>' |
       cut -b 3- |
       while read FULLPATH
@@ -164,6 +172,10 @@ do
 
     FOUND=false
     diff $ARCHIVEDIR/$DEVICENAME-without.txt $ARCHIVEDIR/$DEVICENAME-with.txt |
+      grep -v Nfc\.apk\$ |
+      grep -v Tag\.apk\$ |
+      grep -v libnfc\.so\$ |
+      grep -v libnfc_jni\.so\$ |
       grep '>' |
       cut -b 3- |
       while read FULLPATH
