@@ -199,6 +199,7 @@ do
 
     ) > $ARCHIVEDIR/$DEVICENAME-$FILESTYLE-files.sh
     cp $ARCHIVEDIR/$DEVICENAME-$FILESTYLE-files.sh device/$MANUFACTURERNAME/$DEVICENAME/$FILESTYLE-files.sh
+    chmod a+x device/$MANUFACTURERNAME/$DEVICENAME/$FILESTYLE-files.sh
   done
 
   (
