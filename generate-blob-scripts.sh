@@ -168,6 +168,7 @@ do
     FOUND=false
     diff $ARCHIVEDIR/$DEVICENAME-without.txt $ARCHIVEDIR/$DEVICENAME-with.txt |
       grep -v '\.odex$' |
+      grep -v '\.apk$' |
       grep '>' |
       cut -b 3- |
       while read FULLPATH
