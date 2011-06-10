@@ -16,7 +16,7 @@
 
 # This script auto-generates the scripts that manage the handling of the
 # proprietary blobs necessary to build the Android Open-Source Project code
-# for passion and crespo targets
+# for a variety of hardware targets
 
 # It needs to be run from the root of a source tree that can repo sync,
 # runs builds with and without the vendor tree, and uses the difference
