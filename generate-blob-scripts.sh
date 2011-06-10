@@ -214,7 +214,10 @@ do
       done
     echo
 
+    echo
     echo 'EOF'
+
+    echo
 
     echo -n '(cat << EOF) | sed s/__DEVICE__/$DEVICE/g | sed s/__MANUFACTURER__/$MANUFACTURER/g > ../../../vendor/$MANUFACTURER/$DEVICE/'
     echo 'proprietary/Android.mk'
