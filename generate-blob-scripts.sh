@@ -45,33 +45,38 @@ shift
 
 DEVICES="crespo crespo4g stingray wingray tuna toro panda"
 
+repo sync
+repo sync
+repo sync
+
 ARCHIVEDIR=archive-$(date +%s)
-mkdir $ARCHIVEDIR
+if test -d archive-ref
+then
+  cp -R archive-ref $ARCHIVEDIR
+else
+  mkdir $ARCHIVEDIR
 
-repo sync
-repo sync
-repo sync
-
-. build/envsetup.sh
-for DEVICENAME in $DEVICES
-do
-  rm -rf out
-  lunch full_$DEVICENAME-user
-  make -j32
-  cat out/target/product/$DEVICENAME/installed-files.txt |
-    cut -b 15- |
-    sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
-done
-rm -rf vendor
-for DEVICENAME in $DEVICES
-do
-  rm -rf out
-  lunch full_$DEVICENAME-user
-  make -j32
-  cat out/target/product/$DEVICENAME/installed-files.txt |
-    cut -b 15- |
-    sort -f > $ARCHIVEDIR/$DEVICENAME-without.txt
-done
+  . build/envsetup.sh
+  for DEVICENAME in $DEVICES
+  do
+    rm -rf out
+    lunch full_$DEVICENAME-user
+    make -j32
+    cat out/target/product/$DEVICENAME/installed-files.txt |
+      cut -b 15- |
+      sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
+  done
+  rm -rf vendor
+  for DEVICENAME in $DEVICES
+  do
+    rm -rf out
+    lunch full_$DEVICENAME-user
+    make -j32
+    cat out/target/product/$DEVICENAME/installed-files.txt |
+      cut -b 15- |
+      sort -f > $ARCHIVEDIR/$DEVICENAME-without.txt
+  done
+fi
 
 for DEVICENAME in $DEVICES
 do
