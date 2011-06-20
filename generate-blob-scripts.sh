@@ -43,11 +43,14 @@ then
 fi
 shift
 
-DEVICES="crespo crespo4g stingray wingray tuna toro maguro panda"
+DEVICES="crespo crespo4g stingray wingray panda"
 
 repo sync
 repo sync
 repo sync
+rm -rf device/*/tuna
+rm -rf device/*/toro
+rm -rf device/*/maguro
 
 ARCHIVEDIR=archive-$(date +%s)
 if test -d archive-ref
