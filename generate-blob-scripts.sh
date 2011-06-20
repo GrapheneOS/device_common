@@ -48,9 +48,6 @@ DEVICES="crespo crespo4g stingray wingray panda"
 repo sync
 repo sync
 repo sync
-rm -rf device/*/tuna
-rm -rf device/*/toro
-rm -rf device/*/maguro
 
 ARCHIVEDIR=archive-$(date +%s)
 if test -d archive-ref
@@ -70,6 +67,9 @@ else
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
   rm -rf vendor
+  rm -rf device/*/tuna
+  rm -rf device/*/toro
+  rm -rf device/*/maguro
   for DEVICENAME in $DEVICES
   do
     rm -rf out
