@@ -43,7 +43,7 @@ then
 fi
 shift
 
-DEVICES="crespo crespo4g stingray panda"
+DEVICES="crespo crespo4g stingray panda toro maguro"
 
 repo sync
 repo sync
@@ -67,9 +67,7 @@ else
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
   rm -rf vendor
-  rm -rf device/*/tuna
-  rm -rf device/*/toro
-  rm -rf device/*/maguro
+  rm -rf device/*/tuna/libsensors
   for DEVICENAME in $DEVICES
   do
     rm -rf out
