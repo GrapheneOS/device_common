@@ -67,7 +67,6 @@ else
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
   rm -rf vendor
-  rm -rf device/*/tuna/libsensors
   for DEVICENAME in $DEVICES
   do
     rm -rf out
