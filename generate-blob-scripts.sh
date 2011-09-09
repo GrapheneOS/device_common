@@ -287,7 +287,7 @@ do
   (
     cd device/$MANUFACTURERNAME/$DEVICENAME
     git add .
-    git commit -m "auto-generated blob-handling scripts"
+    git commit -m "$(echo -e 'auto-generated blob-handling scripts\n\nBug: 4295425')"
     if test "$1" != "" -a "$2" != ""
     then
       echo uploading to server $1 branch $2
