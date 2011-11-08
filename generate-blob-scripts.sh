@@ -44,6 +44,7 @@ fi
 shift
 
 DEVICES="crespo crespo4g stingray panda toro maguro"
+export LC_ALL=C
 
 repo sync
 repo sync
