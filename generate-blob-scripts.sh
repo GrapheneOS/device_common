@@ -43,8 +43,12 @@ then
 fi
 shift
 
-DEVICES="maguro"
+DEVICES="crespo crespo4g stingray wingray panda toro maguro"
 export LC_ALL=C
+
+repo sync
+repo sync
+repo sync
 
 ARCHIVEDIR=archive-$(date +%s)
 if test -d archive-ref
