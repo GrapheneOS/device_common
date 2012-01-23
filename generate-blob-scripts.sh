@@ -43,7 +43,7 @@ then
 fi
 shift
 
-DEVICES="crespo crespo4g stingray wingray panda toro maguro"
+DEVICES="crespo crespo4g stingray wingray panda toro torospr maguro"
 
 repo sync
 repo sync
