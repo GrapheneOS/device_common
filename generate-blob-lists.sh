@@ -45,9 +45,9 @@ shift
 DEVICES="crespo crespo4g stingray wingray panda toro torospr maguro"
 export LC_ALL=C
 
-repo sync
-repo sync
-repo sync
+repo sync -j32 -n
+repo sync -j32 -n
+repo sync -j2 -l
 
 ARCHIVEDIR=archive-$(date +%s)
 if test -d archive-ref
@@ -120,7 +120,10 @@ do
   fi
 done
 
-if ! test -d archive-ref
+if true
+then
+  rm -rf out/
+elif ! test -d archive-ref
 then
   echo * device/* |
     tr \  \\n |
