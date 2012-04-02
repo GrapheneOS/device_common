@@ -18,7 +18,7 @@ then
 fi
 if test "$BOOTLOADERSRC" = ""
 then
-  RADIOSRC=bootloader.img
+  BOOTLOADERSRC=bootloader.img
 fi
 rm -rf tmp
 mkdir -p tmp/$PRODUCT-$VERSION
