@@ -22,17 +22,28 @@ then
 fi
 rm -rf tmp
 mkdir -p tmp/$PRODUCT-$VERSION
-unzip -d tmp signed-$PRODUCT-target_files-$BUILD.zip RADIO/$RADIOSRC RADIO/$BOOTLOADERSRC
+unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$BOOTLOADERSRC
+if test "$RADIO" != ""
+then
+  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$RADIOSRC
+fi
 if test "$CDMARADIO" != ""
 then
-  unzip -d tmp signed-$PRODUCT-target_files-$BUILD.zip RADIO/radio-cdma.img
+  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/radio-cdma.img
 fi
-cp signed-$PRODUCT-img-$BUILD.zip tmp/$PRODUCT-$VERSION/image-$PRODUCT-$VERSION.zip
+cp ${SRCPREFIX}$PRODUCT-img-$BUILD.zip tmp/$PRODUCT-$VERSION/image-$PRODUCT-$VERSION.zip
 cp tmp/RADIO/$BOOTLOADERSRC tmp/$PRODUCT-$VERSION/bootloader-$DEVICE-$BOOTLOADER.img
-cp tmp/RADIO/$RADIOSRC tmp/$PRODUCT-$VERSION/radio-$DEVICE-$RADIO.img
+if test "$RADIO" != ""
+then
+  cp tmp/RADIO/$RADIOSRC tmp/$PRODUCT-$VERSION/radio-$DEVICE-$RADIO.img
+fi
 if test "$CDMARADIO" != ""
 then
   cp tmp/RADIO/radio-cdma.img tmp/$PRODUCT-$VERSION/radio-cdma-$DEVICE-$CDMARADIO.img
+fi
+if test "$SLEEPDURATION" = ""
+then
+  SLEEPDURATION=5
 fi
 cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 #!/bin/sh
@@ -53,17 +64,22 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
 fastboot reboot-bootloader
-sleep 5
+sleep $SLEEPDURATION
+EOF
+if test "$RADIO" != ""
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot flash radio radio-$DEVICE-$RADIO.img
 fastboot reboot-bootloader
-sleep 5
+sleep $SLEEPDURATION
 EOF
+fi
 if test "$CDMARADIO" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img
 fastboot reboot-bootloader
-sleep 5
+sleep $SLEEPDURATION
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
@@ -89,17 +105,22 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
 fastboot reboot-bootloader
-sleep 5
+sleep $SLEEPDURATION
+EOF
+if test "$RADIO" != ""
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 fastboot flash radio radio-$DEVICE-$RADIO.img
 fastboot reboot-bootloader
-sleep 5
+sleep $SLEEPDURATION
 EOF
+fi
 if test "$CDMARADIO" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img
 fastboot reboot-bootloader
-sleep 5
+sleep $SLEEPDURATION
 EOF
 fi
 chmod a+x tmp/$PRODUCT-$VERSION/flash-base.sh
