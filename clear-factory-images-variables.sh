@@ -13,6 +13,7 @@
 # limitations under the License.
 
 unset BOOTLOADER
+unset BOOTLOADERFILE
 unset BOOTLOADERSRC
 unset BUILD
 unset CDMARADIO
