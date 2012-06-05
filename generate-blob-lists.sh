@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="crespo crespo4g stingray wingray panda toro torospr maguro grouper"
+DEVICES="crespo crespo4g stingray wingray panda toro torospr maguro grouper mako"
 export LC_ALL=C
 
 repo sync -j32 -n
