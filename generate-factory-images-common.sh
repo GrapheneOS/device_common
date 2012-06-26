@@ -70,6 +70,18 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+EOF
+if test "$ERASEALL" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot erase boot
+fastboot erase cache
+fastboot erase recovery
+fastboot erase system
+fastboot erase userdata
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
 fastboot reboot-bootloader
 sleep $SLEEPDURATION
