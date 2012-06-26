@@ -60,6 +60,16 @@ else
   for DEVICENAME in $DEVICES
   do
     rm -rf out
+    if test $DEVICENAME = maguro
+    then
+      lunch yakju-user
+      make -j32 libdrmdecrypt
+    fi
+    if test $DEVICENAME = toro
+    then
+      lunch mysid-user
+      make -j32 libdrmdecrypt
+    fi
     lunch full_$DEVICENAME-user
     make -j32
     cat out/target/product/$DEVICENAME/installed-files.txt |
