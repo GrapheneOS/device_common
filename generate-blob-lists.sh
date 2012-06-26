@@ -80,9 +80,9 @@ fi
 
 for DEVICENAME in $DEVICES
 do
+  MANUFACTURERNAME=$( find device -type d | grep [^/]\*/[^/]\*/$DEVICENAME\$ | cut -f 2 -d / )
   if test $(wc -l < $ARCHIVEDIR/$DEVICENAME-without.txt) != 0 -a $(wc -l < $ARCHIVEDIR/$DEVICENAME-with.txt) != 0
   then
-    MANUFACTURERNAME=$( find device -type d | grep [^/]\*/[^/]\*/$DEVICENAME\$ | cut -f 2 -d / )
     (
       echo '# Copyright (C) 2011 The Android Open Source Project'
       echo '#'
@@ -111,6 +111,16 @@ do
       cd device/$MANUFACTURERNAME/$DEVICENAME
       git add .
       git commit -m "$(echo -e 'auto-generated blob list\n\nBug: 4295425')"
+      if test "$1" != "" -a "$2" != ""
+      then
+        echo uploading to server $1 branch $2
+        git push ssh://$1:29418/device/$MANUFACTURERNAME/$DEVICENAME.git HEAD:refs/for/$2/autoblobs
+      fi
+    )
+  else
+    (
+      cd device/$MANUFACTURERNAME/$DEVICENAME
+      git commit --allow-empty -m "$(echo -e 'DO NOT SUBMIT - BROKEN BUILD\n\nBug: 4295425')"
       if test "$1" != "" -a "$2" != ""
       then
         echo uploading to server $1 branch $2
