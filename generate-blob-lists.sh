@@ -114,7 +114,7 @@ do
       if test "$1" != "" -a "$2" != ""
       then
         echo uploading to server $1 branch $2
-        git push ssh://$1:29418/device/$MANUFACTURERNAME/$DEVICENAME.git HEAD:refs/for/$2/autoblobs
+        git push $1/device/$MANUFACTURERNAME/$DEVICENAME.git HEAD:refs/for/$2/autoblobs
       fi
     )
   else
@@ -124,7 +124,7 @@ do
       if test "$1" != "" -a "$2" != ""
       then
         echo uploading to server $1 branch $2
-        git push ssh://$1:29418/device/$MANUFACTURERNAME/$DEVICENAME.git HEAD:refs/for/$2/autoblobs
+        git push $1/device/$MANUFACTURERNAME/$DEVICENAME.git HEAD:refs/for/$2/autoblobs
       fi
     )
   fi
