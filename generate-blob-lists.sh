@@ -66,7 +66,7 @@ else
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
-  rm -rf vendor
+  rm -rf vendor hardware/qcom/audio hardware/qcom/camera hardware/qcom/gps
   for DEVICENAME in $DEVICES
   do
     rm -rf out
