@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="panda maguro toro toroplus grouper tilapia mako manta"
+DEVICES="panda maguro toro grouper tilapia manta"
 export LC_ALL=C
 
 repo sync -j32 -n
@@ -56,8 +56,10 @@ then
 else
   mkdir $ARCHIVEDIR
 
-  rm -rf device/moto/common device/moto/stingray device/moto/wingray
-  rm -rf device/samsung/crespo device/samsung/crespo4g
+  rm -rf device/lge
+  rm -rf device/moto
+  rm -rf device/samsung/crespo*
+  rm -rf hardware/qcom
   . build/envsetup.sh
   for DEVICENAME in $DEVICES
   do
@@ -69,7 +71,6 @@ else
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
   rm -rf vendor
-  rm -rf hardware/qcom/audio hardware/qcom/camera hardware/qcom/gps
   for DEVICENAME in $DEVICES
   do
     rm -rf out
