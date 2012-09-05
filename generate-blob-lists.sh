@@ -56,6 +56,8 @@ then
 else
   mkdir $ARCHIVEDIR
 
+  rm -rf device/moto/common device/moto/stingray device/moto/wingray
+  rm -rf device/samsung/crespo device/samsung/crespo4g
   . build/envsetup.sh
   for DEVICENAME in $DEVICES
   do
@@ -68,8 +70,6 @@ else
   done
   rm -rf vendor
   rm -rf hardware/qcom/audio hardware/qcom/camera hardware/qcom/gps
-  rm -rf device/moto/common device/moto/stingray device/moto/wingray
-  rm -rf device/samsung/crespo device/samsung/crespo4g
   for DEVICENAME in $DEVICES
   do
     rm -rf out
