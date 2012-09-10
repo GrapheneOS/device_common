@@ -106,6 +106,62 @@ cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot -w update image-$PRODUCT-$VERSION.zip
 EOF
 chmod a+x tmp/$PRODUCT-$VERSION/flash-all.sh
+cat > tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+@ECHO OFF
+:: Copyright 2012 The Android Open Source Project
+::
+:: Licensed under the Apache License, Version 2.0 (the "License");
+:: you may not use this file except in compliance with the License.
+:: You may obtain a copy of the License at
+::
+::      http://www.apache.org/licenses/LICENSE-2.0
+::
+:: Unless required by applicable law or agreed to in writing, software
+:: distributed under the License is distributed on an "AS IS" BASIS,
+:: WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+:: See the License for the specific language governing permissions and
+:: limitations under the License.
+
+PATH=%PATH%;"%SYSTEMROOT%\System32"
+EOF
+if test "$ERASEALL" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot erase boot
+fastboot erase cache
+fastboot erase recovery
+fastboot erase system
+fastboot erase userdata
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
+fastboot reboot-bootloader
+ping -n $SLEEPDURATION 127.0.0.1 >nul
+EOF
+if test "$RADIO" != ""
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot flash radio radio-$DEVICE-$RADIO.img
+fastboot reboot-bootloader
+ping -n $SLEEPDURATION 127.0.0.1 >nul
+EOF
+fi
+if test "$CDMARADIO" != ""
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img
+fastboot reboot-bootloader
+ping -n $SLEEPDURATION 127.0.0.1 >nul
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot -w update image-$PRODUCT-$VERSION.zip
+
+echo Press any key to exit...
+pause >nul
+exit
+EOF
 cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 #!/bin/sh
 
