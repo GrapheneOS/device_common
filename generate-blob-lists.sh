@@ -72,7 +72,6 @@ else
   rm -rf device/samsung/manta
   rm -rf device/samsung/crespo*
   rm -rf device/samsung/toro*p*
-  rm -rf external/eigen
   rm -rf external/libnfc-nci
   rm -rf hardware/broadcom/nfc
   rm -rf hardware/msm7k
@@ -81,7 +80,6 @@ else
   rm -rf packages/apps/Camera
   rm -rf packages/apps/Gallery2
   rm -rf packages/apps/Nfc
-  rm -rf packages/apps/PhoneCommon
   rm -rf vendor
   for DEVICENAME in $DEVICES
   do
