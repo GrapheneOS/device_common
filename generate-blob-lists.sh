@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro grouper"
+DEVICES="maguro toro toroplus grouper"
 export LC_ALL=C
 
 repo sync -j32 -n
@@ -71,7 +71,7 @@ else
   rm -rf device/moto
   rm -rf device/samsung/manta
   rm -rf device/samsung/crespo*
-  rm -rf device/samsung/toro*p*
+  rm -rf device/samsung/torospr
   rm -rf external/bluedroid
   rm -rf external/eigen
   rm -rf external/libnfc-nci
@@ -79,6 +79,7 @@ else
   rm -rf hardware/msm7k
   rm -rf hardware/qcom
   rm -rf hardware/samsung_slsi
+  rm -rf packages/apps/Bluetooth
   rm -rf packages/apps/Camera
   rm -rf packages/apps/Gallery2
   rm -rf packages/apps/Nfc
