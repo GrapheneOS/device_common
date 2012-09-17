@@ -72,7 +72,7 @@ else
   rm -rf device/samsung/manta
   rm -rf device/samsung/crespo*
   rm -rf device/samsung/torospr
-  rm -rf external/bluedroid
+  rm -rf external/bluetooth/bluedroid
   rm -rf external/eigen
   rm -rf external/libnfc-nci
   rm -rf hardware/broadcom/nfc
