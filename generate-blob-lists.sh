@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro grouper"
+DEVICES="maguro toro toroplus grouper"
 export LC_ALL=C
 
 repo sync -j32 -n
