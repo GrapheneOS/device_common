@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus grouper"
+DEVICES="maguro toro toroplus grouper manta"
 export LC_ALL=C
 
 repo sync -j32 -n
@@ -66,22 +66,10 @@ else
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
-  rm -rf device/asus/tilapia
   rm -rf device/lge
-  rm -rf device/moto
-  rm -rf device/samsung/manta
-  rm -rf device/samsung/crespo*
-  rm -rf device/samsung/torospr
-  rm -rf external/bluetooth/bluedroid
-  rm -rf external/libnfc-nci
   rm -rf hardware/broadcom/nfc
   rm -rf hardware/msm7k
   rm -rf hardware/qcom
-  rm -rf hardware/samsung_slsi
-  rm -rf packages/apps/Bluetooth
-  rm -rf packages/apps/Camera
-  rm -rf packages/apps/Gallery2
-  rm -rf packages/apps/Nfc
   rm -rf vendor
   for DEVICENAME in $DEVICES
   do
