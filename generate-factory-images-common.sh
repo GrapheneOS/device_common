@@ -12,16 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if test "$RADIOSRC" = ""
+# Use the default values if they weren't explicitly set
+if test "$XLOADERSRC" = ""
 then
-  RADIOSRC=radio.img
+  XLOADERSRC=xloader.img
 fi
 if test "$BOOTLOADERSRC" = ""
 then
   BOOTLOADERSRC=bootloader.img
 fi
+if test "$RADIOSRC" = ""
+then
+  RADIOSRC=radio.img
+fi
+if test "$SLEEPDURATION" = ""
+then
+  SLEEPDURATION=5
+fi
+
+# Prepare the staging directory
 rm -rf tmp
 mkdir -p tmp/$PRODUCT-$VERSION
+
+# Extract the bootloader(s) and radio(s) as necessary
+if test "$XLOADER" != ""
+then
+  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$XLOADERSRC
+fi
 if test "$BOOTLOADERFILE" = ""
 then
   unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$BOOTLOADERSRC
@@ -34,7 +51,10 @@ if test "$CDMARADIO" != "" -a "$CDMARADIOFILE" = ""
 then
   unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/radio-cdma.img
 fi
+
+# Copy the various images in their staging location
 cp ${SRCPREFIX}$PRODUCT-img-$BUILD.zip tmp/$PRODUCT-$VERSION/image-$PRODUCT-$VERSION.zip
+cp tmp/RADIO/$BOOTLOADERSRC tmp/$PRODUCT-$VERSION/xloader-$DEVICE-$XLOADER.img
 if test "$BOOTLOADERFILE" = ""
 then
   cp tmp/RADIO/$BOOTLOADERSRC tmp/$PRODUCT-$VERSION/bootloader-$DEVICE-$BOOTLOADER.img
@@ -59,10 +79,8 @@ then
     cp $CDMARADIOFILE tmp/$PRODUCT-$VERSION/radio-cdma-$DEVICE-$CDMARADIO.img
   fi
 fi
-if test "$SLEEPDURATION" = ""
-then
-  SLEEPDURATION=5
-fi
+
+# Write flash-all.sh
 cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 #!/bin/sh
 
@@ -91,6 +109,12 @@ fastboot erase system
 fastboot erase userdata
 EOF
 fi
+if test "$XLOADER" != ""
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot flash xloader xloader-$DEVICE-$XLOADER.img
+EOF
+fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
 fastboot reboot-bootloader
@@ -116,6 +140,8 @@ cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot -w update image-$PRODUCT-$VERSION.zip
 EOF
 chmod a+x tmp/$PRODUCT-$VERSION/flash-all.sh
+
+# Write flash-all.bat
 cat > tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 @ECHO OFF
 :: Copyright 2012 The Android Open Source Project
@@ -142,6 +168,12 @@ fastboot erase cache
 fastboot erase recovery
 fastboot erase system
 fastboot erase userdata
+EOF
+fi
+if test "$XLOADER" != ""
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot flash xloader xloader-$DEVICE-$XLOADER.img
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
@@ -172,6 +204,8 @@ echo Press any key to exit...
 pause >nul
 exit
 EOF
+
+# Write flash-base.sh
 cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 #!/bin/sh
 
@@ -189,6 +223,14 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+EOF
+if test "$XLOADER" != ""
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
+fastboot flash xloader xloader-$DEVICE-$XLOADER.img
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
 fastboot reboot-bootloader
 sleep $SLEEPDURATION
@@ -210,6 +252,10 @@ sleep $SLEEPDURATION
 EOF
 fi
 chmod a+x tmp/$PRODUCT-$VERSION/flash-base.sh
+
+# Create the distributable package
 (cd tmp ; tar zcvf ../$PRODUCT-$VERSION-factory.tgz $PRODUCT-$VERSION)
 mv $PRODUCT-$VERSION-factory.tgz $PRODUCT-$VERSION-factory-$(sha1sum < $PRODUCT-$VERSION-factory.tgz | cut -b -8).tgz
+
+# Clean up
 rm -rf tmp
