@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus grouper manta mako"
+DEVICES="maguro toro toroplus grouper manta mako phantasm"
 export LC_ALL=C
 
 repo sync -j32 -n
