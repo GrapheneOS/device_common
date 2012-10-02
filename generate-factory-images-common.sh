@@ -107,6 +107,14 @@ EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
+EOF
+if test "$TWINBOOTLOADERS" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot flash bootloader2 bootloader-$DEVICE-$BOOTLOADER.img
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot reboot-bootloader
 sleep $SLEEPDURATION
 EOF
@@ -168,6 +176,14 @@ EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
+EOF
+if test "$TWINBOOTLOADERS" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot flash bootloader2 bootloader-$DEVICE-$BOOTLOADER.img
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 fastboot reboot-bootloader
 ping -n $SLEEPDURATION 127.0.0.1 >nul
 EOF
@@ -222,6 +238,14 @@ EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
+EOF
+if test "$TWINBOOTLOADERS" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
+fastboot flash bootloader2 bootloader-$DEVICE-$BOOTLOADER.img
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 fastboot reboot-bootloader
 sleep $SLEEPDURATION
 EOF
