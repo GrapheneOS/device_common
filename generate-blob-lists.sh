@@ -83,7 +83,7 @@ fi
 
 for DEVICENAME in $DEVICES
 do
-  MANUFACTURERNAME=$( find device -type d | grep [^/]\*/[^/]\*/$DEVICENAME\$ | cut -f 2 -d / )
+  MANUFACTURERNAME=$( find device -type d | grep ^[^/]\*/[^/]\*/$DEVICENAME\$ | cut -f 2 -d / )
   if test $(wc -l < $ARCHIVEDIR/$DEVICENAME-without.txt) != 0 -a $(wc -l < $ARCHIVEDIR/$DEVICENAME-with.txt) != 0
   then
     (
