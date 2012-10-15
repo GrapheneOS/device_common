@@ -77,9 +77,11 @@
 #define HCI_VSC_WRITE_PCM_DATA_FORMAT_PARAM     0xFC1E
 #define HCI_VSC_WRITE_I2SPCM_INTERFACE_PARAM    0xFC6D
 #define HCI_VSC_LAUNCH_RAM                      0xFC4E
+#define HCI_READ_LOCAL_BDADDR                   0x1009
 
 #define HCI_EVT_CMD_CMPL_STATUS_RET_BYTE        5
 #define HCI_EVT_CMD_CMPL_LOCAL_NAME_STRING      6
+#define HCI_EVT_CMD_CMPL_LOCAL_BDADDR_ARRAY     6
 #define HCI_EVT_CMD_CMPL_OPCODE                 3
 #define LPM_CMD_PARAM_SIZE                      12
 #define UPDATE_BAUDRATE_CMD_PARAM_SIZE          6
@@ -107,6 +109,9 @@ enum {
     HW_CFG_DL_FW_PATCH,
     HW_CFG_SET_UART_BAUD_2,
     HW_CFG_SET_BD_ADDR
+#if (USE_CONTROLLER_BDADDR == TRUE)
+    , HW_CFG_READ_BD_ADDR
+#endif
 };
 
 /* h/w config control block */
@@ -534,6 +539,35 @@ static uint8_t hw_config_set_bdaddr(HC_BT_HDR *p_buf)
     return (retval);
 }
 
+#if (USE_CONTROLLER_BDADDR == TRUE)
+/*******************************************************************************
+**
+** Function         hw_config_read_bdaddr
+**
+** Description      Read controller's Bluetooth Device Address
+**
+** Returns          TRUE, if valid address is sent
+**                  FALSE, otherwise
+**
+*******************************************************************************/
+static uint8_t hw_config_read_bdaddr(HC_BT_HDR *p_buf)
+{
+    uint8_t retval = FALSE;
+    uint8_t *p = (uint8_t *) (p_buf + 1);
+
+    UINT16_TO_STREAM(p, HCI_READ_LOCAL_BDADDR);
+    *p = 0; /* parameter length */
+
+    p_buf->len = HCI_CMD_PREAMBLE_SIZE;
+    hw_cfg_cb.state = HW_CFG_READ_BD_ADDR;
+
+    retval = bt_vendor_cbacks->xmit_cb(HCI_READ_LOCAL_BDADDR, p_buf, \
+                                 hw_config_cback);
+
+    return (retval);
+}
+#endif // (USE_CONTROLLER_BDADDR == TRUE)
+
 /*******************************************************************************
 **
 ** Function         hw_config_cback
@@ -552,6 +586,9 @@ void hw_config_cback(void *p_mem)
     HC_BT_HDR  *p_buf=NULL;
     uint8_t     is_proceeding = FALSE;
     int         i;
+#if (USE_CONTROLLER_BDADDR == TRUE)
+    const uint8_t null_bdaddr[BD_ADDR_LEN] = {0,0,0,0,0,0};
+#endif
 
     status = *((uint8_t *)(p_evt_buf + 1) + HCI_EVT_CMD_CMPL_STATUS_RET_BYTE);
     p = (uint8_t *)(p_evt_buf + 1) + HCI_EVT_CMD_CMPL_OPCODE;
@@ -735,9 +772,13 @@ void hw_config_cback(void *p_mem)
                     line_speed_to_userial_baud(UART_TARGET_BAUD_RATE) \
                 );
 
+#if (USE_CONTROLLER_BDADDR == TRUE)
+                if ((is_proceeding = hw_config_read_bdaddr(p_buf)) == TRUE)
+                    break;
+#else
                 if ((is_proceeding = hw_config_set_bdaddr(p_buf)) == TRUE)
                     break;
-
+#endif
                 /* fall through intentionally */
             case HW_CFG_SET_BD_ADDR:
                 ALOGI("vendor lib fwcfg completed");
@@ -754,6 +795,41 @@ void hw_config_cback(void *p_mem)
 
                 is_proceeding = TRUE;
                 break;
+
+#if (USE_CONTROLLER_BDADDR == TRUE)
+            case HW_CFG_READ_BD_ADDR:
+                p_tmp = (char *) (p_evt_buf + 1) + \
+                         HCI_EVT_CMD_CMPL_LOCAL_BDADDR_ARRAY;
+
+                if (memcmp(p_tmp, null_bdaddr, BD_ADDR_LEN) == 0)
+                {
+                    // Controller does not have a valid OTP BDADDR!
+                    // Set the BTIF initial BDADDR instead.
+                    if ((is_proceeding = hw_config_set_bdaddr(p_buf)) == TRUE)
+                        break;
+                }
+                else
+                {
+                    ALOGI("Controller OTP bdaddr %02X:%02X:%02X:%02X:%02X:%02X",
+                        *(p_tmp+5), *(p_tmp+4), *(p_tmp+3),
+                        *(p_tmp+2), *(p_tmp+1), *p_tmp);
+                }
+
+                ALOGI("vendor lib fwcfg completed");
+                bt_vendor_cbacks->dealloc(p_buf);
+                bt_vendor_cbacks->fwcfg_cb(BT_VND_OP_RESULT_SUCCESS);
+
+                hw_cfg_cb.state = 0;
+
+                if (hw_cfg_cb.fw_fd != -1)
+                {
+                    close(hw_cfg_cb.fw_fd);
+                    hw_cfg_cb.fw_fd = -1;
+                }
+
+                is_proceeding = TRUE;
+                break;
+#endif // (USE_CONTROLLER_BDADDR == TRUE)
         } // switch(hw_cfg_cb.state)
     } // if (p_buf != NULL)
 
