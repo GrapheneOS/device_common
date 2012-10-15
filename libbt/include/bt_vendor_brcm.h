@@ -82,6 +82,24 @@
 #define FW_PATCH_SETTLEMENT_DELAY_MS          0
 #endif
 
+/* The Bluetooth Device Aaddress source switch:
+ *
+ * -FALSE- (default value)
+ *  Get the factory BDADDR from device's file system. Normally the BDADDR is
+ *  stored in the location pointed by the PROPERTY_BT_BDADDR_PATH (defined in
+ *  btif_common.h file) property.
+ *
+ * -TRUE-
+ *  If the Bluetooth Controller has equipped with a non-volatile memory (such
+ *  as BCM4330's OTP memory), the factory BDADDR can be stored in there and
+ *  retrieved by the stack while enabling BT.
+ *  !!! WARNING !!! Make sure that the OTP feature has been enabled in the
+ *  firmware patchram (.hcd) file.
+ */
+#ifndef USE_CONTROLLER_BDADDR
+#define USE_CONTROLLER_BDADDR   FALSE
+#endif
+
 /* sleep mode
 
     0: disable
