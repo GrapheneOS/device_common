@@ -197,7 +197,7 @@ static int op(bt_vendor_opcode_t opcode, void *param)
         case BT_VND_OP_LPM_WAKE_SET_STATE:
             {
                 uint8_t *state = (uint8_t *) param;
-                uint8_t wake_assert = (state == BT_VND_LPM_WAKE_ASSERT) ? \
+                uint8_t wake_assert = (*state == BT_VND_LPM_WAKE_ASSERT) ? \
                                         TRUE : FALSE;
 
                 hw_lpm_set_wake_state(wake_assert);
