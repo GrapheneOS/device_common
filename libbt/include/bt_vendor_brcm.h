@@ -202,6 +202,13 @@
 #define BT_WAKE_VIA_USERIAL_IOCTL       FALSE
 #endif
 
+/* BT_WAKE_VIA_PROC
+
+    LPM & BT_WAKE control through PROC nodes
+*/
+#ifndef BT_WAKE_VIA_PROC
+#define BT_WAKE_VIA_PROC       FALSE
+#endif
 
 /* SCO_CFG_INCLUDED
 

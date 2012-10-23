@@ -38,6 +38,7 @@
 enum {
     UPIO_BT_WAKE = 0,
     UPIO_HOST_WAKE,
+    UPIO_LPM_MODE,
     UPIO_MAX_COUNT
 };
 

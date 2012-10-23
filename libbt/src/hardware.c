@@ -1045,10 +1045,12 @@ uint8_t hw_lpm_enable(uint8_t turn_on)
         if (turn_on)
         {
             memcpy(p, &lpm_param, LPM_CMD_PARAM_SIZE);
+            upio_set(UPIO_LPM_MODE, UPIO_ASSERT, 0);
         }
         else
         {
             memset(p, 0, LPM_CMD_PARAM_SIZE);
+            upio_set(UPIO_LPM_MODE, UPIO_DEASSERT, 0);
         }
 
         if ((ret = bt_vendor_cbacks->xmit_cb(HCI_VSC_WRITE_SLEEP_MODE, p_buf, \
