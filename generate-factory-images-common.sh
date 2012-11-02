@@ -43,7 +43,7 @@ if test "$BOOTLOADERFILE" = ""
 then
   unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$BOOTLOADERSRC
 fi
-if test "$RADIO" != ""
+if test "$RADIO" != "" -a "$RADIOFILE" = ""
 then
   unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$RADIOSRC
 fi
@@ -66,7 +66,12 @@ else
 fi
 if test "$RADIO" != ""
 then
-  cp tmp/RADIO/$RADIOSRC tmp/$PRODUCT-$VERSION/radio-$DEVICE-$RADIO.img
+  if test "$RADIOFILE" = ""
+  then
+    cp tmp/RADIO/$RADIOSRC tmp/$PRODUCT-$VERSION/radio-$DEVICE-$RADIO.img
+  else
+    cp $RADIOFILE tmp/$PRODUCT-$VERSION/radio-$DEVICE-$RADIO.img
+  fi
 fi
 if test "$CDMARADIO" != ""
 then

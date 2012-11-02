@@ -24,6 +24,7 @@ unset DEVICE
 unset ERASE
 unset PRODUCT
 unset RADIO
+unset RADIOFILE
 unset RADIOSRC
 unset SLEEPDURATION
 unset SRCPREFIX
