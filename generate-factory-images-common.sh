@@ -97,6 +97,12 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # limitations under the License.
 
 EOF
+if test "$UNLOCKBOOTLOADER" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot oem unlock
+EOF
+fi
 if test "$ERASEALL" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
@@ -166,6 +172,12 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 
 PATH=%PATH%;"%SYSTEMROOT%\System32"
 EOF
+if test "$UNLOCKBOOTLOADER" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot oem unlock
+EOF
+fi
 if test "$ERASEALL" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF

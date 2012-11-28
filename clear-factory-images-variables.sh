@@ -12,12 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-unset XLOADER
-unset XLOADERSRC
 unset BOOTLOADER
 unset BOOTLOADERFILE
 unset BOOTLOADERSRC
-unset TWINBOOTLOADERS
 unset BUILD
 unset CDMARADIO
 unset DEVICE
@@ -28,4 +25,8 @@ unset RADIOFILE
 unset RADIOSRC
 unset SLEEPDURATION
 unset SRCPREFIX
+unset UNLOCKBOOTLOADER
 unset VERSION
+unset TWINBOOTLOADERS
+unset XLOADER
+unset XLOADERSRC
