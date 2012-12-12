@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus grouper manta mako"
+DEVICES="maguro toro toroplus grouper manta"
 export LC_ALL=C
 
 repo sync -j32 -n
@@ -66,6 +66,9 @@ else
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
+  rm -rf device/lge/*
+  rm -rf hardware/msm7k
+  rm -rf hardware/qcom/*
   rm -rf vendor
   for DEVICENAME in $DEVICES
   do
