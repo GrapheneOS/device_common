@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus grouper manta"
+DEVICES="maguro toro toroplus grouper manta tungsten"
 export LC_ALL=C
 
 repo sync -j32 -n
