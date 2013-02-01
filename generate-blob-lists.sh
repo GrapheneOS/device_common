@@ -66,7 +66,6 @@ else
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
-  rm -rf device/asus/tilapia
   rm -rf hardware/broadcom/nfc
   rm -rf packages/apps/UnifiedEmail
   rm -rf vendor
