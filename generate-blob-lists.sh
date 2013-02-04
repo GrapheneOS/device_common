@@ -66,7 +66,6 @@ else
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
-  rm -rf device/asus/tilapia
   rm -rf device/lge/*
   rm -rf hardware/broadcom/nfc
   rm -rf hardware/msm7k
