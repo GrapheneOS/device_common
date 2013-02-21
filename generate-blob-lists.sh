@@ -66,9 +66,7 @@ else
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
-  rm -rf device/lge/*
-  rm -rf hardware/msm7k
-  rm -rf hardware/qcom/*
+  rm -rf frameworks/webview
   rm -rf vendor
   for DEVICENAME in $DEVICES
   do
