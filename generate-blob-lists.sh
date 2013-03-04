@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus grouper tilapia manta mako phantasm wolfie"
+DEVICES="maguro toro toroplus panda grouper tilapia manta mako phantasm wolfie flo deb"
 export LC_ALL=C
 
 repo sync -j32 -n
