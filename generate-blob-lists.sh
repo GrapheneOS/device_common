@@ -60,7 +60,7 @@ else
   for DEVICENAME in $DEVICES
   do
     rm -rf out
-    lunch full_$DEVICENAME-user
+    lunch aosp_$DEVICENAME-user
     make -j32
     cat out/target/product/$DEVICENAME/installed-files.txt |
       cut -b 15- |
@@ -70,7 +70,7 @@ else
   for DEVICENAME in $DEVICES
   do
     rm -rf out
-    lunch full_$DEVICENAME-user
+    lunch aosp_$DEVICENAME-user
     make -j32
     cat out/target/product/$DEVICENAME/installed-files.txt |
       cut -b 15- |
