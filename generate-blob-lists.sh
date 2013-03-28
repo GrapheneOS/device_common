@@ -42,7 +42,12 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus panda grouper tilapia manta mako phantasm wolfie flo deb"
+DEVICES="maguro toro toroplus panda grouper tilapia manta mako"
+
+# Start experimental devices
+DEVICES="$DEVICES"
+# End experimental devices
+
 export LC_ALL=C
 
 repo sync -j32 -n
