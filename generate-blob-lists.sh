@@ -42,7 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus panda grouper tilapia manta mako phantasm wolfie flo deb arndale anchovy msm8x74"
+DEVICES="maguro toro toroplus panda grouper tilapia manta mako phantasm wolfie flo deb arndale anchovy msm8x74 hammerhead"
 
 # Start experimental devices
 DEVICES="$DEVICES"
