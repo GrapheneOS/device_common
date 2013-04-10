@@ -18,7 +18,8 @@ LOCAL_C_INCLUDES += \
         $(BDROID_DIR)/hci/include
 
 LOCAL_SHARED_LIBRARIES := \
-        libcutils
+        libcutils \
+        liblog
 
 LOCAL_MODULE := libbt-vendor
 LOCAL_MODULE_TAGS := optional
