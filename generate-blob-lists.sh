@@ -42,11 +42,7 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus panda grouper tilapia manta mako"
-
-# Start experimental devices
-DEVICES="$DEVICES"
-# End experimental devices
+DEVICES=$(for i in device/*/*/proprietary-blobs.txt ; do basename $(dirname $i) ; done)
 
 export LC_ALL=C
 
@@ -72,6 +68,7 @@ else
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
   rm -rf vendor
+  rm -rf hardware/qcom/gps
   for DEVICENAME in $DEVICES
   do
     rm -rf out
