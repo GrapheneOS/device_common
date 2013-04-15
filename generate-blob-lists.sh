@@ -42,17 +42,13 @@ then
 fi
 shift
 
-DEVICES="maguro toro toroplus panda grouper tilapia manta mako phantasm wolfie flo deb arndale anchovy msm8x74 hammerhead"
-
-# Start experimental devices
-DEVICES="$DEVICES"
-# End experimental devices
-
-export LC_ALL=C
-
 repo sync -j32 -n
 repo sync -j32 -n
 repo sync -j2 -l
+
+DEVICES=$(for i in device/*/*/proprietary-blobs.txt ; do basename $(dirname $i) ; done)
+
+export LC_ALL=C
 
 ARCHIVEDIR=archive-$(date +%s)
 if test -d archive-ref
@@ -72,6 +68,7 @@ else
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
   rm -rf vendor
+  rm -rf hardware/qcom/gps
   for DEVICENAME in $DEVICES
   do
     rm -rf out
