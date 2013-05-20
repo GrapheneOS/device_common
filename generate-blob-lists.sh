@@ -112,7 +112,7 @@ do
     (
       cd device/$MANUFACTURERNAME/$DEVICENAME
       git add .
-      git commit -m "$(echo -e 'auto-generated blob list\n\nBug: 4295425')"
+      git commit -m "$(echo -e 'auto-generated blob list for '$DEVICENAME'\n\nBug: 4295425')"
       if test "$1" != "" -a "$2" != ""
       then
         echo uploading to server $1 branch $2
