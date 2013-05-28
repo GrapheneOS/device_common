@@ -68,6 +68,8 @@ else
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
   done
   rm -rf vendor
+  rm -rf hardware/qcom/display
+  rm -rf hardware/qcom/media
   rm -rf hardware/qcom/gps
   for DEVICENAME in $DEVICES
   do
