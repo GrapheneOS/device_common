@@ -62,7 +62,7 @@ else
   do
     rm -rf out
     lunch aosp_$DEVICENAME-user
-    make -j32
+    make -j64
     cat out/target/product/$DEVICENAME/installed-files.txt |
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-with.txt
@@ -73,7 +73,7 @@ else
   do
     rm -rf out
     lunch aosp_$DEVICENAME-user
-    make -j32
+    make -j64
     cat out/target/product/$DEVICENAME/installed-files.txt |
       cut -b 15- |
       sort -f > $ARCHIVEDIR/$DEVICENAME-without.txt
