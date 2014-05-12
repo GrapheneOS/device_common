@@ -50,11 +50,19 @@ do
     then
       ONE_FILE=`echo $ONE_FILE | sed 's/system\//SYSTEM\//g'`
     fi
+
+    if [[ $ONE_FILE == */lib64/* ]]
+    then
+      FILEDIR_NEW=$FILEDIR/lib64
+    else
+      FILEDIR_NEW=$FILEDIR
+    fi
+
     echo \ \ \ \ Extracting $ONE_FILE
-    unzip -j -o $ZIP $ONE_FILE -d $FILEDIR > /dev/null || echo \ \ \ \ Error extracting $ONE_FILE
+    unzip -j -o $ZIP $ONE_FILE -d $FILEDIR_NEW> /dev/null || echo \ \ \ \ Error extracting $ONE_FILE
     if test ${ONE_FILE,,} = system/vendor/bin/gpsd -o ${ONE_FILE,,} = system/vendor/bin/pvrsrvinit -o ${ONE_FILE,,} = system/bin/fRom
     then
-      chmod a+x $FILEDIR/$(basename $ONE_FILE) || echo \ \ \ \ Error chmoding $ONE_FILE
+      chmod a+x $FILEDIR_NEW/$(basename $ONE_FILE) || echo \ \ \ \ Error chmoding $ONE_FILE
     fi
   done
   echo \ \ Setting up $COMPANY-specific makefiles
