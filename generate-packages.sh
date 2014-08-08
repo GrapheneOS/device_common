@@ -41,7 +41,7 @@ do
   mkdir -p $FILEDIR
   mkdir -p tmp/vendor/$MANUFACTURER/$ROOTDEVICE
 
-  TO_EXTRACT=`sed -n -e '/'"$COMPANY"'/,/;;/ p' $EXTRACT_LIST_FILENAME | tail -n+3 | head -n-2 | sed -e 's/\\\//g'`
+  TO_EXTRACT=`sed -n -e '/'"  $COMPANY"'/,/;;/ p' $EXTRACT_LIST_FILENAME | tail -n+3 | head -n-2 | sed -e 's/\\\//g'`
 
   echo \ \ Extracting files from OTA package
   for ONE_FILE in $TO_EXTRACT

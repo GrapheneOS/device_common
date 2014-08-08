@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2013 The Android Open Source Project
+# Copyright 2014 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ mkdir -p vendor/$1/$2
 
 cat > device/$1/$2/vendorsetup.sh << EOF
 #
-# Copyright 2013 The Android Open Source Project
+# Copyright 2014 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ EOF
 
 cat > device/$1/$2/AndroidProducts.mk << EOF
 #
-# Copyright 2013 The Android Open-Source Project
+# Copyright 2014 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ EOF
 
 cat > device/$1/$2/full_$2.mk << EOF
 #
-# Copyright 2013 The Android Open-Source Project
+# Copyright 2014 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -92,7 +92,7 @@ EOF
 
 cat > device/$1/$2/device.mk << EOF
 #
-# Copyright 2013 The Android Open-Source Project
+# Copyright 2014 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -121,7 +121,7 @@ EOF
 
 cat > device/$1/$2/BoardConfig.mk << EOF
 #
-# Copyright 2013 The Android Open-Source Project
+# Copyright 2014 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -150,7 +150,7 @@ touch device/$1/$2-kernel/MODULE_LICENSE_GPL
 
 cat > vendor/$1/$2/device-vendor.mk << EOF
 #
-# Copyright 2013 The Android Open-Source Project
+# Copyright 2014 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -168,7 +168,7 @@ EOF
 
 cat > vendor/$1/$2/BoardConfigVendor.mk << EOF
 #
-# Copyright 2013 The Android Open-Source Project
+# Copyright 2014 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
