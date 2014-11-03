@@ -81,6 +81,12 @@ do
       echo "LOCAL_MODULE_CLASS := APPS" >> ${APK_MAKEFILE}
       echo "LOCAL_SRC_FILES := \$(LOCAL_MODULE).apk" >> ${APK_MAKEFILE}
       echo "LOCAL_CERTIFICATE := PRESIGNED" >> ${APK_MAKEFILE}
+
+      if [[ ${TMP_ONE_FILE_NAME} == "LeanbackLauncher" ]]
+      then
+        echo "LOCAL_OVERRIDES_PACKAGES := Launcher2" >> ${APK_MAKEFILE}
+      fi
+
       echo "include \$(BUILD_PREBUILT)" >> ${APK_MAKEFILE}
       echo "" >> ${APK_MAKEFILE}
     fi
