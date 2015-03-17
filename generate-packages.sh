@@ -82,6 +82,11 @@ do
       echo "LOCAL_SRC_FILES := \$(LOCAL_MODULE).apk" >> ${APK_MAKEFILE}
       echo "LOCAL_CERTIFICATE := PRESIGNED" >> ${APK_MAKEFILE}
 
+      if [[ ${ONE_FILE} == *priv-app/* ]]
+      then
+        echo "LOCAL_PRIVILEGED_MODULE := true" >> ${APK_MAKEFILE}
+      fi
+
       if [[ ${TMP_ONE_FILE_NAME} == "LeanbackLauncher" ]]
       then
         echo "LOCAL_OVERRIDES_PACKAGES := Launcher2" >> ${APK_MAKEFILE}
