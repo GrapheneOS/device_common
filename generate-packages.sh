@@ -62,6 +62,9 @@ do
     if [[ $ONE_FILE == */lib64/* ]]
     then
       FILEDIR_NEW=$FILEDIR/lib64
+    elif [[ $ONE_FILE == */arm/nb/* ]]
+    then
+      FILEDIR_NEW=$FILEDIR/armnb
     else
       FILEDIR_NEW=$FILEDIR
     fi
