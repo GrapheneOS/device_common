@@ -41,10 +41,12 @@ do
   mkdir -p $FILEDIR
   FILEDIR_ROOT=tmp/vendor/$MANUFACTURER/$ROOTDEVICE
 
-  if test ${ROOTDEVICE} = "dragon"
-  then
-    FILEDIR_ROOT=tmp/vendor/${MANUFACTURER}_devices/$ROOTDEVICE
-  fi
+  case ${ROOTDEVICE} in
+    dragon|marlin|sailfish)
+      FILEDIR_ROOT=tmp/vendor/${MANUFACTURER}_devices/$ROOTDEVICE ;;
+    *) ;;
+  esac
+
   mkdir -p ${FILEDIR_ROOT}
 
   TO_EXTRACT=`sed -n -e '/'"  $COMPANY"'/,/;;/ p' $EXTRACT_LIST_FILENAME | tail -n+3 | head -n-2 | sed -e 's/\\\//g'`
