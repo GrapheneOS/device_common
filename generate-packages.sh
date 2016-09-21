@@ -130,6 +130,19 @@ do
   cp -R $COMPANY/staging/* tmp/vendor/$COMPANY/$DEVICE || echo \ \ \ \ Error copying makefiles
   echo \ \ Setting up shared makefiles
   cp -R root/* ${FILEDIR_ROOT} || echo \ \ \ \ Error copying makefiles
+
+  if [[ ${ROOTDEVICE} == sailfish ]]
+  then
+    FILEDIR_ROOT_SHARE=tmp/vendor/${MANUFACTURER}_devices/marlin
+    mkdir -p ${FILEDIR_ROOT_SHARE}
+
+    # sailfish shares BoardConfigVendor.mk with its bro' marlin
+    mv ${FILEDIR_ROOT}/BoardConfigVendor.mk ${FILEDIR_ROOT_SHARE}
+    # Move device-vendor-sailfish.mk under marlin directory so that it can be
+    # inherited by device/google/marlin/aosp_sailfish.mk
+    mv ${FILEDIR_ROOT}/device-vendor-sailfish.mk ${FILEDIR_ROOT_SHARE}
+  fi
+
   echo \ \ Generating self-extracting script
   SCRIPT=extract-$COMPANY-$DEVICE.sh
   cat PROLOGUE > tmp/$SCRIPT || echo \ \ \ \ Error generating script
