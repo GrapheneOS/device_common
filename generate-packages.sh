@@ -131,6 +131,19 @@ do
   echo \ \ Setting up shared makefiles
   unzip -j -o $ZIP OTA/android-info.txt -d root > /dev/null || echo \ \ \ \ Error extracting OTA/android-info.txt
   cp -R root/* ${FILEDIR_ROOT} || echo \ \ \ \ Error copying makefiles
+
+  if [[ ${ROOTDEVICE} == sailfish ]]
+  then
+    FILEDIR_ROOT_SHARE=tmp/vendor/${MANUFACTURER}_devices/marlin
+    mkdir -p ${FILEDIR_ROOT_SHARE}
+
+    # sailfish shares BoardConfigVendor.mk with its bro' marlin
+    mv ${FILEDIR_ROOT}/BoardConfigVendor.mk ${FILEDIR_ROOT_SHARE}
+    # Move device-vendor-sailfish.mk under marlin directory so that it can be
+    # inherited by device/google/marlin/aosp_sailfish.mk
+    mv ${FILEDIR_ROOT}/device-vendor-sailfish.mk ${FILEDIR_ROOT_SHARE}
+  fi
+
   echo \ \ Generating self-extracting script
   SCRIPT=extract-$COMPANY-$DEVICE.sh
   cat PROLOGUE > tmp/$SCRIPT || echo \ \ \ \ Error generating script
