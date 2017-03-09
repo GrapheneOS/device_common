@@ -129,6 +129,7 @@ do
   echo \ \ Setting up $COMPANY-specific makefiles
   cp -R $COMPANY/staging/* tmp/vendor/$COMPANY/$DEVICE || echo \ \ \ \ Error copying makefiles
   echo \ \ Setting up shared makefiles
+  unzip -j -o $ZIP OTA/android-info.txt -d root > /dev/null || echo \ \ \ \ Error extracting OTA/android-info.txt
   cp -R root/* ${FILEDIR_ROOT} || echo \ \ \ \ Error copying makefiles
 
   if [[ ${ROOTDEVICE} == sailfish ]]
