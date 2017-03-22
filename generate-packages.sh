@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ $# -lt 6 -o $# -gt 7 ]
+if [ $# != 6 ]
 then
-  echo Usage: $0 BUILD_ID BUILD ROOTDEVICE DEVICE MANUFACTURER PRODUCT [PATCHSCRIPT]
+  echo Usage: $0 BUILD_ID BUILD ROOTDEVICE DEVICE MANUFACTURER PRODUCT
   echo Example: $0 1075408 KOT49Y mako mako lge occam
 fi
 
@@ -28,7 +28,6 @@ BUILD=$2
 ROOTDEVICE=$3
 DEVICE=$4
 MANUFACTURER=$5
-PATCHSCRIPT=$7
 
 cd ../$MANUFACTURER/$ROOTDEVICE/self-extractors || echo Error change dir
 
@@ -143,10 +142,6 @@ do
     # Move device-vendor-sailfish.mk under marlin directory so that it can be
     # inherited by device/google/marlin/aosp_sailfish.mk
     mv ${FILEDIR_ROOT}/device-vendor-sailfish.mk ${FILEDIR_ROOT_SHARE}
-  fi
-
-  if [ -n ${PATCHSCRIPT} ]; then
-    ${PATCHSCRIPT}
   fi
 
   echo \ \ Generating self-extracting script
