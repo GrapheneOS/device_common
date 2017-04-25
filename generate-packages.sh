@@ -38,15 +38,19 @@ do
   echo Processing files from $COMPANY
   rm -rf tmp
   FILEDIR=tmp/vendor/$COMPANY/$DEVICE/proprietary
-  mkdir -p $FILEDIR
+  MAKEFILEDIR=tmp/vendor/$COMPANY/$DEVICE/
   FILEDIR_ROOT=tmp/vendor/$MANUFACTURER/$ROOTDEVICE
 
   case ${ROOTDEVICE} in
     dragon|marlin|sailfish)
       FILEDIR_ROOT=tmp/vendor/${MANUFACTURER}_devices/$ROOTDEVICE ;;
+    hikey960)
+      FILEDIR=tmp/vendor/linaro/$DEVICE/$COMPANY/proprietary
+      MAKEFILEDIR=tmp/vendor/linaro/$DEVICE/$COMPANY ;;
     *) ;;
   esac
 
+  mkdir -p ${FILEDIR}
   mkdir -p ${FILEDIR_ROOT}
 
   TO_EXTRACT=`sed -n -e '/'"  $COMPANY"'/,/;;/ p' $EXTRACT_LIST_FILENAME | tail -n+3 | head -n-2 | sed -e 's/\\\//g'`
@@ -127,7 +131,7 @@ do
 
   done
   echo \ \ Setting up $COMPANY-specific makefiles
-  cp -R $COMPANY/staging/* tmp/vendor/$COMPANY/$DEVICE || echo \ \ \ \ Error copying makefiles
+  cp -R $COMPANY/staging/* $MAKEFILEDIR || echo \ \ \ \ Error copying makefiles
   echo \ \ Setting up shared makefiles
   unzip -j -o $ZIP OTA/android-info.txt -d root > /dev/null || echo \ \ \ \ Error extracting OTA/android-info.txt
   cp -R root/* ${FILEDIR_ROOT} || echo \ \ \ \ Error copying makefiles
