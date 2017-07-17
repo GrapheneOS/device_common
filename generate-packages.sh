@@ -42,7 +42,7 @@ do
   FILEDIR_ROOT=tmp/vendor/$MANUFACTURER/$ROOTDEVICE
 
   case ${ROOTDEVICE} in
-    dragon|marlin|sailfish)
+    dragon|marlin|sailfish|taimen|walleye)
       FILEDIR_ROOT=tmp/vendor/${MANUFACTURER}_devices/$ROOTDEVICE ;;
     hikey960)
       FILEDIR=tmp/vendor/linaro/$DEVICE/$COMPANY/proprietary
@@ -146,6 +146,16 @@ do
     # Move device-vendor-sailfish.mk under marlin directory so that it can be
     # inherited by device/google/marlin/aosp_sailfish.mk
     mv ${FILEDIR_ROOT}/device-vendor-sailfish.mk ${FILEDIR_ROOT_SHARE}
+  elif [[ ${ROOTDEVICE} == walleye ]]
+  then
+    FILEDIR_ROOT_SHARE=tmp/vendor/${MANUFACTURER}_devices/muskie/proprietary
+    mkdir -p ${FILEDIR_ROOT_SHARE}
+
+    # walleye shares BoardConfigVendor.mk with its sis' muskie
+    mv ${FILEDIR_ROOT}/proprietary/BoardConfigVendor.mk ${FILEDIR_ROOT_SHARE}
+    # Move device-vendor-walleye.mk under muskie directory so that it can be
+    # inherited by device/google/muskie/aosp_walleye.mk
+    mv ${FILEDIR_ROOT}/proprietary/device-vendor-walleye.mk ${FILEDIR_ROOT_SHARE}
   fi
 
   echo \ \ Generating self-extracting script
