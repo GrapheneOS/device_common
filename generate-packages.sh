@@ -129,6 +129,16 @@ do
       sed -i "s/$ONE_FILE_BASE/$ATMEL_FILE/" moto/staging/device-partial.mk
     fi
 
+    # Sanity check to make sure apk or jar files are not stripped
+    if [[ ${ONE_FILE_BASE} == *.apk ]] || [[ ${ONE_FILE_BASE} == *.jar ]]
+    then
+      zipinfo ${FILEDIR_NEW}/${ONE_FILE_BASE} | grep -q classes.dex > /dev/null
+      if [[ $? != "0" ]]
+      then
+        echo "Error ${ONE_FILE} is stripped"
+      fi
+    fi
+
   done
   echo \ \ Setting up $COMPANY-specific makefiles
   cp -R $COMPANY/staging/* $MAKEFILEDIR || echo \ \ \ \ Error copying makefiles
