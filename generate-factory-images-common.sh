@@ -101,6 +101,10 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if ! grep -q dtbo.sig \$(which fastboot); then
+  echo "fastboot too old"
+  exit 1
+fi
 EOF
 if test "$UNLOCKBOOTLOADER" = "true"
 then
@@ -254,6 +258,10 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if ! grep -q dtbo.sig \$(which fastboot); then
+  echo "fastboot too old"
+  exit 1
+fi
 EOF
 if test "$XLOADER" != ""
 then
