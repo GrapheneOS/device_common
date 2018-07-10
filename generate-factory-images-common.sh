@@ -101,8 +101,8 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if ! grep -q dtbo.sig \$(which fastboot); then
-  echo "fastboot too old"
+if ! grep -q partition-exists \$(which fastboot); then
+  echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
 fi
 EOF
@@ -258,8 +258,8 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if ! grep -q dtbo.sig \$(which fastboot); then
-  echo "fastboot too old"
+if ! grep -q partition-exists \$(which fastboot); then
+  echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
 fi
 EOF
