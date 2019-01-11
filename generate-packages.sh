@@ -42,7 +42,7 @@ do
   FILEDIR_ROOT=tmp/vendor/$MANUFACTURER/$ROOTDEVICE
 
   case ${ROOTDEVICE} in
-    dragon|marlin|sailfish|taimen|walleye|crosshatch|blueline)
+    dragon|marlin|sailfish|taimen|walleye|crosshatch|blueline|bonito|sargo)
       FILEDIR_ROOT=tmp/vendor/${MANUFACTURER}_devices/$ROOTDEVICE ;;
     hikey960)
       FILEDIR=tmp/vendor/linaro/$DEVICE/$COMPANY/proprietary
@@ -74,6 +74,9 @@ do
     if [[ $ONE_FILE == */lib64/* ]]
     then
       FILEDIR_NEW=$FILEDIR/lib64
+    elif [[ $ONE_FILE == */arm64/* ]]
+    then
+      FILEDIR_NEW=$FILEDIR/arm64
     elif [[ $ONE_FILE == */arm/nb/* ]]
     then
       FILEDIR_NEW=$FILEDIR/armnb
@@ -175,6 +178,16 @@ do
     mv ${FILEDIR_ROOT}/proprietary/BoardConfigVendor.mk ${FILEDIR_ROOT_SHARE}
     # Move device-vendor-blueline.mk under crosshatch directory so that it can
     # be inherited by device/google/crosshatch/aosp_blueline.mk
+    mv ${FILEDIR_ROOT}/proprietary/device-vendor.mk ${FILEDIR_ROOT_SHARE}
+  elif [[ ${ROOTDEVICE} == sargo ]]
+  then
+    FILEDIR_ROOT_SHARE=tmp/vendor/${MANUFACTURER}_devices/bonito/proprietary
+    mkdir -p ${FILEDIR_ROOT_SHARE}
+
+    # sargo shares BoardConfigVendor.mk with its bro-in-law' bonito
+    mv ${FILEDIR_ROOT}/proprietary/BoardConfigVendor.mk ${FILEDIR_ROOT_SHARE}
+    # Move device-vendor-sargo.mk under bonito directory so that it can
+    # be inherited by device/google/bonito/aosp_sargo.mk
     mv ${FILEDIR_ROOT}/proprietary/device-vendor.mk ${FILEDIR_ROOT_SHARE}
   fi
 
