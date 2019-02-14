@@ -119,15 +119,6 @@ do
     fi
 
     ONE_FILE_BASE=$(basename $ONE_FILE)
-    if [[ $ONE_FILE_BASE == *atmel-a432-*-shamu-p1.tdat ]]
-    then
-      ATMEL_FILE=$(ls $FILEDIR_NEW/$ONE_FILE_BASE | cut -f6 -d'/')
-      sed -i "s/$ONE_FILE_BASE/$ATMEL_FILE/" moto/staging/device-partial.mk
-    elif [[ $ONE_FILE_BASE == *atmel-a432-*-shamu.tdat ]]
-    then
-      ATMEL_FILE=$(ls $FILEDIR_NEW/$ONE_FILE_BASE | cut -f6 -d'/')
-      sed -i "s/$ONE_FILE_BASE/$ATMEL_FILE/" moto/staging/device-partial.mk
-    fi
 
     # Sanity check to make sure apk or jar files are not stripped
     if [[ ${ONE_FILE_BASE} == *.apk ]] || [[ ${ONE_FILE_BASE} == *.jar ]]
