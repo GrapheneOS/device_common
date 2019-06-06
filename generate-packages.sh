@@ -42,12 +42,11 @@ do
   FILEDIR_ROOT=tmp/vendor/$MANUFACTURER/$ROOTDEVICE
 
   case ${ROOTDEVICE} in
-    dragon|marlin|sailfish|taimen|walleye|crosshatch|blueline|bonito|sargo)
-      FILEDIR_ROOT=tmp/vendor/${MANUFACTURER}_devices/$ROOTDEVICE ;;
     hikey960)
       FILEDIR=tmp/vendor/linaro/$DEVICE/$COMPANY/proprietary
       MAKEFILEDIR=tmp/vendor/linaro/$DEVICE/$COMPANY ;;
-    *) ;;
+    *)
+      FILEDIR_ROOT=tmp/vendor/${MANUFACTURER}_devices/$ROOTDEVICE ;;
   esac
 
   mkdir -p ${FILEDIR}
@@ -142,19 +141,24 @@ do
     # Move device-vendor-sargo.mk under bonito directory so that it can
     # be inherited by device/google/bonito/aosp_sargo.mk
     mv ${FILEDIR_ROOT}/proprietary/device-vendor.mk ${FILEDIR_ROOT_SHARE}
+  elif [[ ${ROOTDEVICE} == flame ]]
+  then
+    FILEDIR_ROOT_SHARE=tmp/vendor/${MANUFACTURER}_devices/coral/proprietary
+    mkdir -p ${FILEDIR_ROOT_SHARE}
+
+    # flame shares BoardConfigVendor.mk with its sis-in-law' coral
+    mv ${FILEDIR_ROOT}/proprietary/BoardConfigVendor.mk ${FILEDIR_ROOT_SHARE}
+    # Move device-vendor-flame.mk under coral directory so that it can
+    # be inherited by device/google/coral/aosp_flame.mk
+    mv ${FILEDIR_ROOT}/proprietary/device-vendor.mk ${FILEDIR_ROOT_SHARE}
   fi
 
   if [[ ${COMPANY} == qcom ]]
   then
-    case ${ROOTDEVICE} in
-      marlin|sailfish|taimen|walleye|crosshatch|blueline|bonito|sargo)
-        if [[ -e "${MAKEFILEDIR}/Android.mk" ]]
-        then
-          mv ${MAKEFILEDIR}/Android.mk ${FILEDIR}/
-        fi
-         ;;
-      *) ;;
-    esac
+    if [[ -e "${MAKEFILEDIR}/Android.mk" ]]
+    then
+      mv ${MAKEFILEDIR}/Android.mk ${FILEDIR}/
+    fi
   fi
 
   echo \ \ Generating self-extracting script
