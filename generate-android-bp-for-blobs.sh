@@ -29,6 +29,7 @@
 #
 # Generate prebuilt modules for these blobs:
 # $ export SYSTEM_EXT_SPECIFIC=true # If installing prebuilts to system_ext/ partition
+# $ export OWNER=qcom # Owner is relevant if PRODUCT_RESTRICT_VENDOR_FILES is set
 # $ ./generate-android-bp-for-blobs.sh ./vendor/qcom/coral/proprietary > Android.bp.txt
 # $ mv Android.bp.txt ${ANDROID_BUILD_TOP}/device/google/coral/self-extractors/qcom/staging/
 #
@@ -113,6 +114,9 @@ echo "    },"
 echo "    compile_multilib: \"$multilib\","
   if [[ -n "$SYSTEM_EXT_SPECIFIC" ]]; then
 echo "    system_ext_specific: true,"
+  fi
+  if [[ -n "$OWNER" ]]; then
+echo "    owner: \"${OWNER}\","
   fi
 echo "    strip: {"
 echo "        none: true,"
