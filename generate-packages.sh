@@ -59,7 +59,7 @@ do
   do
     if test ${ZIP_TYPE} = target_files
     then
-      ONE_FILE=`echo $ONE_FILE | sed -e 's/system\//SYSTEM\//g' -e 's/system_ext\//SYSTEM_EXT\//g'`
+      ONE_FILE=`echo $ONE_FILE | sed -e 's/system\//SYSTEM\//g' -e 's/system_ext\//SYSTEM_EXT\//g' -e 's/product\//PRODUCT\//g'`
     fi
 
     if [[ $ONE_FILE == */lib64/* ]]
