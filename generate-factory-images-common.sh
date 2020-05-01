@@ -271,8 +271,7 @@ exit
 EOF
 
 # Create the distributable package
-(cd tmp ; zip -r ../$PRODUCT-$VERSION-factory.zip $PRODUCT-$VERSION)
-mv $PRODUCT-$VERSION-factory.zip $PRODUCT-$VERSION-factory-$(sha256sum < $PRODUCT-$VERSION-factory.zip | cut -b -8).zip
+(cd tmp; mv $PRODUCT-$VERSION $PRODUCT-factory-$VERSION; zip -r ../$PRODUCT-factory-$VERSION.zip $PRODUCT-factory-$VERSION)
 
 # Clean up
 rm -rf tmp
