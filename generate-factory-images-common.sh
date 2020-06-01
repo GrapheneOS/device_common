@@ -193,6 +193,27 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 :: limitations under the License.
 
 PATH=%PATH%;"%SYSTEMROOT%\System32"
+
+:: Detect Fastboot version with inline PowerShell
+:: Should work with Windows 7 and later
+
+@PowerShell ^
+\$version=fastboot --version; ^
+try { ^
+    \$verNum = \$version[0].substring(17, 6); ^
+    \$verNum = \$verNum.replace('.', ''); ^
+    if ((-Not (\$verNum -gt 2802)) -Or (-Not (\$verNum -match '^[\d.]+$'))) { ^
+        Exit 1 ^
+    } ^
+} catch { ^
+    Exit 1 ^
+}
+
+IF %ERRORLEVEL% NEQ 0 (
+  ECHO fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html
+  EXIT /B
+)
+
 EOF
 if test "$UNLOCKBOOTLOADER" = "true"
 then
