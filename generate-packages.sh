@@ -84,7 +84,7 @@ do
 
     ONE_FILE_BASE=$(basename $ONE_FILE)
 
-    # Sanity check to make sure apk or jar files are not stripped
+    # Quick check to make sure apk or jar files are not stripped
     if [[ ${ONE_FILE_BASE} == *.apk ]] || [[ ${ONE_FILE_BASE} == *.jar ]]
     then
       zipinfo ${FILEDIR_NEW}/${ONE_FILE_BASE} | grep -q classes.dex > /dev/null
