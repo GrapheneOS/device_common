@@ -59,7 +59,7 @@ do
   do
     if test ${ZIP_TYPE} = target_files
     then
-      ONE_FILE=`echo $ONE_FILE | sed 's/system\//SYSTEM\//g'`
+      ONE_FILE=`echo $ONE_FILE | sed -e 's/system\//SYSTEM\//g' -e 's/system_ext\//SYSTEM_EXT\//g' -e 's/product\//PRODUCT\//g'`
     fi
 
     if [[ $ONE_FILE == */lib64/* ]]
@@ -158,6 +158,10 @@ do
   if [[ -e "${MAKEFILEDIR}/Android.mk" ]]
   then
     mv ${MAKEFILEDIR}/Android.mk ${FILEDIR}/
+  fi
+
+  if [[ -e "${MAKEFILEDIR}/Android.bp.txt" ]]; then
+    mv "${MAKEFILEDIR}/Android.bp.txt" "${FILEDIR}/Android.bp"
   fi
 
   echo \ \ Generating self-extracting script
