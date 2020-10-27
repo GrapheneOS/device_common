@@ -105,6 +105,11 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if ! [ which fastboot >/dev/null ]; then
+  echo "fastboot not found. Please make sure you are reading the install guide at https://grapheneos.org and that your PATH is set up correctly"
+  exit 1
+fi
+
 if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 2802 ]; then
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
@@ -304,6 +309,11 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+if ! [ which fastboot >/dev/null ]; then
+  echo "fastboot not found. Please make sure you are reading the install guide at https://grapheneos.org and that your PATH is set up correctly"
+  exit 1
+fi
 
 if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 2802 ]; then
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
