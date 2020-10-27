@@ -105,7 +105,7 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if ! [ which fastboot >/dev/null ]; then
+if ! [ command -v fastboot >/dev/null ]; then
   echo "fastboot not found. Please make sure you are reading the install guide at https://grapheneos.org and that your PATH is set up correctly"
   exit 1
 fi
@@ -310,7 +310,7 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if ! [ which fastboot >/dev/null ]; then
+if ! [ command -v fastboot >/dev/null ]; then
   echo "fastboot not found. Please make sure you are reading the install guide at https://grapheneos.org and that your PATH is set up correctly"
   exit 1
 fi
