@@ -105,6 +105,11 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if ! command -v fastboot > /dev/null; then
+  echo "fastboot not found; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH"
+  exit 1
+fi
+
 if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 2802 ]; then
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
@@ -198,6 +203,8 @@ PATH=%PATH%;"%SYSTEMROOT%\System32"
 
 :: Detect Fastboot version with inline PowerShell
 :: Should work with Windows 7 and later
+
+where /q fastboot || ECHO fastboot not found; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH && EXIT /B
 
 @PowerShell ^
 \$version=fastboot --version; ^
@@ -304,6 +311,11 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+if ! command -v fastboot > /dev/null; then
+  echo "fastboot not found; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH"
+  exit 1
+fi
 
 if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 2802 ]; then
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
