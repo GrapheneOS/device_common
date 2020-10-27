@@ -205,6 +205,10 @@ PATH=%PATH%;"%SYSTEMROOT%\System32"
 :: Should work with Windows 7 and later
 
 @PowerShell ^
+if (-Not (Get-Command fastboot -ErrorAction SilentlyContinue)) { ^
+    ECHO fastboot not found. please read the official installation guide at https://grapheneos.org and make sure your PATH is set up correctly ^
+    Exit /B ^
+} ^
 \$version=fastboot --version; ^
 try { ^
     \$verNum = \$version[0].substring(17, 6); ^
