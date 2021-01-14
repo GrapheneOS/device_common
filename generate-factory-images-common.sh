@@ -180,6 +180,10 @@ fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
 fastboot reboot-bootloader
 sleep $SLEEPDURATION
 EOF
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+echo "Press Enter to exit..."
+read
+EOF
 chmod a+x tmp/$PRODUCT-$VERSION/flash-all.sh
 
 # Write flash-all.bat
