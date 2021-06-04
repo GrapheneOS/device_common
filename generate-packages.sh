@@ -96,6 +96,7 @@ do
 
   done
   echo \ \ Copying $COMPANY-specific LICENSE
+  cp $COMPANY/COPYRIGHT ${MAKEFILEDIR} || echo \ \ \ \ Error copying COPYRIGHT
   cp $COMPANY/LICENSE ${MAKEFILEDIR} || echo \ \ \ \ Error copying LICENSE
   echo \ \ Setting up $COMPANY-specific makefiles
   cp -R $COMPANY/staging/* $MAKEFILEDIR || echo \ \ \ \ Error copying makefiles
