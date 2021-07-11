@@ -166,6 +166,13 @@ fastboot reboot-bootloader
 sleep $SLEEPDURATION
 EOF
 fi
+if test "$ERASE_APDP" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot erase apdp_a
+fastboot erase apdp_b
+EOF
+fi
 if test "$AVB_PKMD" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
@@ -273,6 +280,13 @@ cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img
 fastboot reboot-bootloader
 ping -n $SLEEPDURATION 127.0.0.1 >nul
+EOF
+fi
+if test "$ERASE_APDP" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot erase apdp_a
+fastboot erase apdp_b
 EOF
 fi
 if test "$AVB_PKMD" != ""

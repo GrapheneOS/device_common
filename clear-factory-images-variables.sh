@@ -21,6 +21,7 @@ unset CDMARADIO
 unset CDMARADIOFILE
 unset DEVICE
 unset ERASE
+unset ERASE_APDP
 unset PRODUCT
 unset RADIO
 unset RADIOFILE
