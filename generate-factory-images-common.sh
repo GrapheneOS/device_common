@@ -176,6 +176,12 @@ fastboot erase avb_custom_key
 fastboot flash avb_custom_key avb_pkmd.bin
 EOF
 fi
+if test "$DISABLE_UART" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot oem uart disable
+EOF
+fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
 fastboot reboot-bootloader
@@ -258,6 +264,12 @@ then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 fastboot erase avb_custom_key
 fastboot flash avb_custom_key avb_pkmd.bin
+EOF
+fi
+if test "$DISABLE_UART" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot oem uart disable
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
