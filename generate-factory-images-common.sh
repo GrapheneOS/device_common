@@ -182,6 +182,13 @@ cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot oem uart disable
 EOF
 fi
+if test "$ERASE_APDP" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot erase apdp_a
+fastboot erase apdp_b
+EOF
+fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
 fastboot reboot-bootloader
@@ -270,6 +277,13 @@ if test "$DISABLE_UART" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 fastboot oem uart disable
+EOF
+fi
+if test "$ERASE_APDP" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot erase apdp_a
+fastboot erase apdp_b
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
