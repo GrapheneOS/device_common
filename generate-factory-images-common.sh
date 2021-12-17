@@ -189,6 +189,13 @@ fastboot erase apdp_a
 fastboot erase apdp_b
 EOF
 fi
+if test "$ERASE_MSADP" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot erase msadp_a
+fastboot erase msadp_b
+EOF
+fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
 fastboot reboot-bootloader
@@ -284,6 +291,13 @@ then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 fastboot erase apdp_a
 fastboot erase apdp_b
+EOF
+fi
+if test "$ERASE_MSADP" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot erase msadp_a
+fastboot erase msadp_b
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
