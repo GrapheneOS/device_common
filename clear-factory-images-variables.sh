@@ -24,6 +24,7 @@ unset DISABLE_UART
 unset ERASE
 unset ERASE_APDP
 unset ERASE_MSADP
+unset FIPS
 unset PRODUCT
 unset RADIO
 unset RADIOFILE
