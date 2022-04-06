@@ -101,7 +101,7 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 3103 ]; then
+if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 3301 ]; then
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
 fi
@@ -258,7 +258,7 @@ cat > tmp/$PRODUCT-$VERSION/flash-base.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 3103 ]; then
+if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 3301 ]; then
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
 fi
