@@ -137,6 +137,15 @@ if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
 fi
+
+product=\$(fastboot getvar product 2>&1 | head -1 | cut -d ' ' -f 2)
+if ! [ \$product = $DEVICE ]; then
+  echo "You're attempting to flash the wrong factory images. This would likely brick your device."
+  echo
+  echo "These factory images are for $DEVICE and the detected device is \$product."
+  exit 1
+fi
+
 EOF
 if test "$UNLOCKBOOTLOADER" = "true"
 then
