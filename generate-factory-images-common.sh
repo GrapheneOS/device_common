@@ -137,6 +137,15 @@ if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\
   echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
   exit 1
 fi
+
+if ! [ \$(fastboot getvar product 2>&1) == *"$DEVICE"* ]; then
+  echo "STOP! THIS IS THE WRONG IMAGE FOR YOUR DEVICE. PROCEEDING ANY FURTHER WOULD RESULT IN A BRICK!"
+  echo "USING THE WEB INSTALLER IS STRONGLY RECCOMENDED https://grapheneos.org/install/web"
+  echo "THE CLI INSTALLATION PROCESS SHOULD ONLY BE USED BY USERS WITH SPECIFIC NEEDS."
+  echo "If you really must use the CLI installation process, you should download the correct image for your device from https://grapheneos.org/releases"
+  exit 1
+fi
+
 EOF
 if test "$UNLOCKBOOTLOADER" = "true"
 then
