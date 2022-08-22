@@ -20,6 +20,7 @@ unset BUILD
 unset CDMARADIO
 unset CDMARADIOFILE
 unset DEVICE
+unset DISABLE_DPM
 unset DISABLE_FIPS
 unset DISABLE_UART
 unset ERASE
