@@ -238,6 +238,13 @@ cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot erase fips
 EOF
 fi
+if test "$DISABLE_DPM" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot erase dpm_a
+fastboot erase dpm_b
+EOF
+fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 fastboot snapshot-update cancel
 fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
@@ -400,6 +407,13 @@ if test "$DISABLE_FIPS" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 fastboot erase fips
+EOF
+fi
+if test "$DISABLE_DPM" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot erase dpm_a
+fastboot erase dpm_b
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
