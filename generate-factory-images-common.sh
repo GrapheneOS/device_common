@@ -164,7 +164,12 @@ fastboot flash xloader xloader-$DEVICE-$XLOADER.img
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
+fastboot --set-active=other
+fastboot reboot-bootloader
+sleep $SLEEPDURATION
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
+fastboot --set-active=other
 EOF
 if test "$TWINBOOTLOADERS" = "true"
 then
@@ -297,7 +302,12 @@ fastboot flash xloader xloader-$DEVICE-$XLOADER.img
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot flash bootloader bootloader-$DEVICE-$BOOTLOADER.img
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
+fastboot --set-active=other
+fastboot reboot-bootloader
+ping -n $SLEEPDURATION 127.0.0.1 >nul
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
+fastboot --set-active=other
 EOF
 if test "$TWINBOOTLOADERS" = "true"
 then
