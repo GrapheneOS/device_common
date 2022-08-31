@@ -166,70 +166,70 @@ fi
 if test "$XLOADER" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot flash xloader xloader-$DEVICE-$XLOADER.img
+fastboot flash xloader xloader-$DEVICE-$XLOADER.img || exit 1
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
-fastboot --set-active=other
-fastboot reboot-bootloader
-sleep $SLEEPDURATION
-fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
-fastboot --set-active=other
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img || exit 1
+fastboot --set-active=other || exit 1
+fastboot reboot-bootloader || exit 1
+sleep $SLEEPDURATION || exit 1
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img || exit 1
+fastboot --set-active=other || exit 1
 EOF
 if test "$TWINBOOTLOADERS" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot flash bootloader2 bootloader-$DEVICE-$BOOTLOADER.img
+fastboot flash bootloader2 bootloader-$DEVICE-$BOOTLOADER.img || exit 1
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot reboot-bootloader
-sleep $SLEEPDURATION
+fastboot reboot-bootloader || exit 1
+sleep $SLEEPDURATION || exit 1
 EOF
 if test "$RADIO" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot flash radio radio-$DEVICE-$RADIO.img
-fastboot reboot-bootloader
-sleep $SLEEPDURATION
+fastboot flash radio radio-$DEVICE-$RADIO.img || exit 1
+fastboot reboot-bootloader || exit 1
+sleep $SLEEPDURATION || exit 1
 EOF
 fi
 if test "$CDMARADIO" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img
-fastboot reboot-bootloader
-sleep $SLEEPDURATION
+fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img || exit 1
+fastboot reboot-bootloader || exit 1
+sleep $SLEEPDURATION || exit 1
 EOF
 fi
 if test "$AVB_PKMD" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot erase avb_custom_key
-fastboot flash avb_custom_key avb_pkmd.bin
-fastboot reboot-bootloader
-sleep $SLEEPDURATION
+fastboot erase avb_custom_key || exit 1
+fastboot flash avb_custom_key avb_pkmd.bin || exit 1
+fastboot reboot-bootloader || exit 1
+sleep $SLEEPDURATION || exit 1
 EOF
 fi
 if test "$DISABLE_UART" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot oem uart disable
+fastboot oem uart disable || exit 1
 EOF
 fi
 if test "$ERASE_APDP" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot erase apdp_a
-fastboot erase apdp_b
+fastboot erase apdp_a || exit 1
+fastboot erase apdp_b || exit 1
 EOF
 fi
 if test "$ERASE_MSADP" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot erase msadp_a
-fastboot erase msadp_b
+fastboot erase msadp_a || exit 1
+fastboot erase msadp_b || exit 1
 EOF
 fi
 if test "$DISABLE_FIPS" = "true"
@@ -241,15 +241,15 @@ fi
 if test "$DISABLE_DPM" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot erase dpm_a
-fastboot erase dpm_b
+fastboot erase dpm_a || exit 1
+fastboot erase dpm_b || exit 1
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
-fastboot snapshot-update cancel
-fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
-fastboot reboot-bootloader
-sleep $SLEEPDURATION
+fastboot snapshot-update cancel || exit 1
+fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip || exit 1
+fastboot reboot-bootloader || exit 1
+sleep $SLEEPDURATION || exit 1
 EOF
 chmod a+x tmp/$PRODUCT-$VERSION/flash-all.sh
 
@@ -337,90 +337,90 @@ fi
 if test "$XLOADER" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot flash xloader xloader-$DEVICE-$XLOADER.img
+fastboot flash xloader xloader-$DEVICE-$XLOADER.img || EXIT /B 1
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
-fastboot --set-active=other
-fastboot reboot-bootloader
-ping -n $SLEEPDURATION 127.0.0.1 >nul
-fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
-fastboot --set-active=other
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img || EXIT /B 1
+fastboot --set-active=other || EXIT /B 1
+fastboot reboot-bootloader || EXIT /B 1
+ping -n $SLEEPDURATION 127.0.0.1 >nul || EXIT /B 1
+fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img || EXIT /B 1
+fastboot --set-active=other || EXIT /B 1
 EOF
 if test "$TWINBOOTLOADERS" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot flash bootloader2 bootloader-$DEVICE-$BOOTLOADER.img
+fastboot flash bootloader2 bootloader-$DEVICE-$BOOTLOADER.img || EXIT /B 1
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot reboot-bootloader
-ping -n $SLEEPDURATION 127.0.0.1 >nul
+fastboot reboot-bootloader || EXIT /B 1
+ping -n $SLEEPDURATION 127.0.0.1 >nul || EXIT /B 1
 EOF
 if test "$RADIO" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot flash radio radio-$DEVICE-$RADIO.img
-fastboot reboot-bootloader
-ping -n $SLEEPDURATION 127.0.0.1 >nul
+fastboot flash radio radio-$DEVICE-$RADIO.img || EXIT /B 1
+fastboot reboot-bootloader || EXIT /B 1
+ping -n $SLEEPDURATION 127.0.0.1 >nul || EXIT /B 1
 EOF
 fi
 if test "$CDMARADIO" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img
-fastboot reboot-bootloader
-ping -n $SLEEPDURATION 127.0.0.1 >nul
+fastboot flash radio-cdma radio-cdma-$DEVICE-$CDMARADIO.img || EXIT /B 1
+fastboot reboot-bootloader || EXIT /B 1
+ping -n $SLEEPDURATION 127.0.0.1 >nul || EXIT /B 1
 EOF
 fi
 if test "$AVB_PKMD" != ""
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot erase avb_custom_key
-fastboot flash avb_custom_key avb_pkmd.bin
-fastboot reboot-bootloader
-ping -n $SLEEPDURATION 127.0.0.1 >nul
+fastboot erase avb_custom_key || EXIT /B 1
+fastboot flash avb_custom_key avb_pkmd.bin || EXIT /B 1
+fastboot reboot-bootloader || EXIT /B 1
+ping -n $SLEEPDURATION 127.0.0.1 >nul || EXIT /B 1
 EOF
 fi
 if test "$DISABLE_UART" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot oem uart disable
+fastboot oem uart disable || EXIT /B 1
 EOF
 fi
 if test "$ERASE_APDP" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot erase apdp_a
-fastboot erase apdp_b
+fastboot erase apdp_a || EXIT /B 1
+fastboot erase apdp_b || EXIT /B 1
 EOF
 fi
 if test "$ERASE_MSADP" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot erase msadp_a
-fastboot erase msadp_b
+fastboot erase msadp_a || EXIT /B 1
+fastboot erase msadp_b || EXIT /B 1
 EOF
 fi
 if test "$DISABLE_FIPS" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot erase fips
+fastboot erase fips || EXIT /B 1
 EOF
 fi
 if test "$DISABLE_DPM" = "true"
 then
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot erase dpm_a
-fastboot erase dpm_b
+fastboot erase dpm_a || EXIT /B 1
+fastboot erase dpm_b || EXIT /B 1
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
-fastboot snapshot-update cancel
-fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
-fastboot reboot-bootloader
-ping -n $SLEEPDURATION 127.0.0.1 >nul
+fastboot snapshot-update cancel || EXIT /B 1
+fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip || EXIT /B 1
+fastboot reboot-bootloader || EXIT /B 1
+ping -n $SLEEPDURATION 127.0.0.1 >nul || EXIT /B 1
 
 echo Press any key to exit...
 pause >nul
