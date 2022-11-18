@@ -170,6 +170,7 @@ fastboot flash xloader xloader-$DEVICE-$XLOADER.img
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot snapshot-update cancel
 fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
 fastboot --set-active=other
 fastboot reboot-bootloader
@@ -341,6 +342,7 @@ fastboot flash xloader xloader-$DEVICE-$XLOADER.img
 EOF
 fi
 cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot snapshot-update cancel
 fastboot flash --slot=other bootloader bootloader-$DEVICE-$BOOTLOADER.img
 fastboot --set-active=other
 fastboot reboot-bootloader
