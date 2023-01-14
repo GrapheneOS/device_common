@@ -251,6 +251,13 @@ fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
 fastboot reboot-bootloader
 sleep $SLEEPDURATION
 EOF
+if test "$ENABLE_AUTO_LOCK_BOOTLOADER" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
+fastboot oem enable-factory-lock
+fastboot oem factory-lock
+EOF
+fi
 chmod a+x tmp/$PRODUCT-$VERSION/flash-all.sh
 
 # Write flash-all.bat
@@ -422,6 +429,15 @@ fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
 fastboot reboot-bootloader
 ping -n $SLEEPDURATION 127.0.0.1 >nul
 
+EOF
+if test "$ENABLE_AUTO_LOCK_BOOTLOADER" = "true"
+then
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
+fastboot oem enable-factory-lock
+fastboot oem factory-lock
+EOF
+fi
+cat >> tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 echo Press any key to exit...
 pause >nul
 exit
