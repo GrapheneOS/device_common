@@ -321,7 +321,7 @@ for /f "tokens=2" %%a in ('fastboot getvar product 2^>^&1 ^| findstr /i /c:"prod
   set "product=%%a"
 )
 
-if not "%product%" == $DEVICE (
+if not "%product%" == "$DEVICE" (
   echo You're attempting to flash the wrong factory images. This would likely brick your device.
   echo These factory images are for $DEVICE and the detected device is %product%.
   pause
