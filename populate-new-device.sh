@@ -43,7 +43,7 @@ cat > device/$1/$2/AndroidProducts.mk << EOF
 
 PRODUCT_MAKEFILES := \$(LOCAL_DIR)/full_$2.mk
 
-COMMON_LUNCH_CHOICES := full_$2-userdebug
+COMMON_LUNCH_CHOICES := full_$2-trunk_staging-userdebug
 EOF
 
 cat > device/$1/$2/full_$2.mk << EOF
