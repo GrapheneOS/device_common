@@ -161,6 +161,11 @@ do
     mv ${MAKEFILEDIR}/Android.mk ${FILEDIR}/
   fi
 
+  if [[ -e "${MAKEFILEDIR}/Android.mk.template" ]]
+  then
+    mv ${MAKEFILEDIR}/Android.mk.template ${FILEDIR}/Android.mk
+  fi
+
   if [[ -e "${MAKEFILEDIR}/Android.bp.txt" ]]; then
     mv "${MAKEFILEDIR}/Android.bp.txt" "${FILEDIR}/Android.bp"
   fi
