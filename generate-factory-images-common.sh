@@ -37,19 +37,19 @@ mkdir -p tmp/$PRODUCT-$VERSION
 # Extract the bootloader(s) and radio(s) as necessary
 if test "$XLOADER" != ""
 then
-  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$XLOADERSRC
+  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files.zip RADIO/$XLOADERSRC
 fi
 if test "$BOOTLOADERFILE" = ""
 then
-  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$BOOTLOADERSRC
+  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files.zip RADIO/$BOOTLOADERSRC
 fi
 if test "$RADIO" != "" -a "$RADIOFILE" = ""
 then
-  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/$RADIOSRC
+  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files.zip RADIO/$RADIOSRC
 fi
 if test "$CDMARADIO" != "" -a "$CDMARADIOFILE" = ""
 then
-  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/radio-cdma.img
+  unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files.zip RADIO/radio-cdma.img
 fi
 
 # Copy the various images in their staging location
