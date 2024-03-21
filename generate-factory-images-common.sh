@@ -25,6 +25,10 @@ if test "$RADIOSRC" = ""
 then
   RADIOSRC=radio.img
 fi
+if test "$GSCFIRMWARESRC" = ""
+then
+  GSCFIRMWARESRC=dauntless
+fi
 if test "$SLEEPDURATION" = ""
 then
   SLEEPDURATION=5
@@ -51,6 +55,9 @@ if test "$CDMARADIO" != "" -a "$CDMARADIOFILE" = ""
 then
   unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip RADIO/radio-cdma.img
 fi
+
+# Extract the GSC firmware
+unzip -d tmp ${SRCPREFIX}$PRODUCT-target_files-$BUILD.zip VENDOR/firmware/$GSCFIRMWARESRC/*
 
 # Copy the various images in their staging location
 cp ${SRCPREFIX}$PRODUCT-img-$BUILD.zip tmp/$PRODUCT-$VERSION/image-$PRODUCT-$VERSION.zip
@@ -82,6 +89,7 @@ then
     cp $CDMARADIOFILE tmp/$PRODUCT-$VERSION/radio-cdma-$DEVICE-$CDMARADIO.img
   fi
 fi
+cp -r tmp/VENDOR/firmware/$GSCFIRMWARESRC/* tmp/$PRODUCT-$VERSION
 
 # Write flash-all.sh
 cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
