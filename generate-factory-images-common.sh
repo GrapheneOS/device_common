@@ -155,6 +155,9 @@ if ! [ \$FASTBOOT_VERSION_NUM -ge $MIN_FASTBOOT_VERSION_NUM ]; then
   exit 1
 fi
 
+# PROLOG_END
+# The above line is used by FlashCapturer in fastboot
+
 product=\$(fastboot getvar product 2>&1 | grep "product:" | cut -d ' ' -f 2)
 if ! [ \$product = $DEVICE ]; then
   echo "You're attempting to flash the wrong factory images. This would likely brick your device."
@@ -331,6 +334,9 @@ for /f "tokens=3" %%a in ('fastboot --version ^| find "fastboot version "') do (
     call:pakExit
   )
 )
+
+:: PROLOG_END
+:: The above line is used by FlashCapturer in fastboot
 
 for /f "tokens=2" %%a in ('fastboot getvar product 2^>^&1 ^| findstr /i /c:"product:"') do (
   set "product=%%a"
