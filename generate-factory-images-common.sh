@@ -95,6 +95,9 @@ then
 fi
 cp -r tmp/VENDOR/firmware/$GSCFIRMWARESRC/* tmp/$PRODUCT-$VERSION
 
+MIN_FASTBOOT_VERSION_STR="33.0.1"
+MIN_FASTBOOT_VERSION_NUM=$(echo $MIN_FASTBOOT_VERSION_STR | tr -d .)
+
 # Write flash-all.sh
 cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 #!/bin/sh
@@ -144,8 +147,11 @@ fi
 
 set -e
 
-if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 3301 ]; then
-  echo "fastboot too old; please download the latest version at https://developer.android.com/studio/releases/platform-tools.html"
+FASTBOOT_VERSION_STR=\$(fastboot --version | grep "fastboot version " | cut -c18-23)
+FASTBOOT_VERSION_NUM=\$(echo \$FASTBOOT_VERSION_STR | tr -d .)
+if ! [ \$FASTBOOT_VERSION_NUM -ge $MIN_FASTBOOT_VERSION_NUM ]; then
+  echo "fastboot version (\$FASTBOOT_VERSION_STR) is older than the minimum supported version ($MIN_FASTBOOT_VERSION_STR)."
+  echo "Download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH"
   exit 1
 fi
 EOF
@@ -299,6 +305,22 @@ if %errorlevel% neq 0 (
   echo fastboot not found
   echo Download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH
   call:pakExit
+)
+
+:: needed for variable operations inside the fastboot version loop
+setlocal EnableDelayedExpansion
+
+for /f "tokens=3" %%a in ('fastboot --version ^| find "fastboot version "') do (
+  set full_ver_str=%%a
+:: substring first 6 chars
+  set ver_str=!full_ver_str:~0,6!
+:: remove dots
+  set ver_num=!ver_str:.=!
+  if not !ver_num! geq $MIN_FASTBOOT_VERSION_NUM (
+    echo fastboot version ^(!ver_str!^) is older than the minimum supported version ^($MIN_FASTBOOT_VERSION_STR^).
+    echo Download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH
+    call:pakExit
+  )
 )
 
 EOF
