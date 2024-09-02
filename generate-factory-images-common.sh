@@ -136,6 +136,12 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.sh << EOF
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if ! command -v fastboot > /dev/null; then
+  echo "fastboot not found"
+  echo "Download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH"
+  exit 1
+fi
+
 set -e
 
 if ! [ \$(\$(which fastboot) --version | grep "version" | cut -c18-23 | sed 's/\.//g' ) -ge 3301 ]; then
@@ -287,6 +293,14 @@ cat > tmp/$PRODUCT-$VERSION/flash-all.bat << EOF
 :: limitations under the License.
 
 PATH=%PATH%;"%SYSTEMROOT%\System32"
+
+where /q fastboot
+if %errorlevel% neq 0 (
+  echo fastboot not found
+  echo Download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH
+  call:pakExit
+)
+
 EOF
 if test "$UNLOCKBOOTLOADER" = "true"
 then
