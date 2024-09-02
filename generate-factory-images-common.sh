@@ -389,6 +389,9 @@ fastboot -w --skip-reboot update image-$PRODUCT-$VERSION.zip
 fastboot reboot-bootloader
 ping -n $SLEEPDURATION 127.0.0.1 >nul
 
+call:pakExit
+
+:pakExit
 echo Press any key to exit...
 pause >nul
 exit
