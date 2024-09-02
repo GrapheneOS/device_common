@@ -154,6 +154,15 @@ if ! [ \$FASTBOOT_VERSION_NUM -ge $MIN_FASTBOOT_VERSION_NUM ]; then
   echo "Download the latest version at https://developer.android.com/studio/releases/platform-tools.html and add it to the shell PATH"
   exit 1
 fi
+
+product=\$(fastboot getvar product 2>&1 | grep "product:" | cut -d ' ' -f 2)
+if ! [ \$product = $DEVICE ]; then
+  echo "You're attempting to flash the wrong factory images. This would likely brick your device."
+  echo
+  echo "These factory images are for $DEVICE and the detected device is \$product."
+  exit 1
+fi
+
 EOF
 if test "$UNLOCKBOOTLOADER" = "true"
 then
@@ -323,6 +332,15 @@ for /f "tokens=3" %%a in ('fastboot --version ^| find "fastboot version "') do (
   )
 )
 
+for /f "tokens=2" %%a in ('fastboot getvar product 2^>^&1 ^| findstr /i /c:"product:"') do (
+  set "product=%%a"
+)
+
+if not "%product%" == "$DEVICE" (
+  echo You're attempting to flash the wrong factory images. This would likely brick your device.
+  echo These factory images are for $DEVICE and the detected device is %product%.
+  call:pakExit
+)
 EOF
 if test "$UNLOCKBOOTLOADER" = "true"
 then
