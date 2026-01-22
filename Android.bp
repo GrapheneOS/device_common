@@ -1,0 +1,14 @@
+soong_namespace {}
+
+genrule {
+    name: "otatools_files",
+    tools: ["soong_zip"],
+    cmd: "mkdir -p $(genDir)/device/common && " +
+        "cp $(in) $(genDir)/device/common && " +
+        "$(location soong_zip) -o $(out) -C $(genDir) -D $(genDir)/device/common",
+    srcs: [
+        "clear-factory-images-variables.sh",
+        "generate-factory-images-common.sh",
+    ],
+    out: ["otatools_files.zip"],
+}
